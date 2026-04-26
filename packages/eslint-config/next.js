@@ -13,6 +13,7 @@ export const config = [
       ...pluginReact.configs.flat.recommended.languageOptions,
       globals: {
         ...globals.serviceworker,
+        ...globals.browser,
       },
     },
   },
