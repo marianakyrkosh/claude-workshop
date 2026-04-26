@@ -10,7 +10,7 @@
 
 **Spec:** `docs/superpowers/specs/2026-04-26-workshop-starter-design.md`
 
-**Source patterns:** `/Users/mkyrkosh/Documents/learning/code/kroogom/code/kroogom` (kroogom monorepo)
+**Source patterns:** `<path-to-kroogom>` (kroogom monorepo — clone separately for reference)
 
 ---
 
@@ -615,7 +615,7 @@ git commit -m "chore: add shared ui package"
 - [ ] **Step 5: Run `npm install` from root to link workspace packages**
 
 ```bash
-cd /Users/mkyrkosh/Documents/learning/code/kroogom/code/claude-workshop && npm install
+npm install  # run from repo root
 ```
 
 - [ ] **Step 6: Commit lockfile**
@@ -1595,7 +1595,7 @@ export default defineConfig({
 - [ ] **Step 7: Run install from root**
 
 ```bash
-cd /Users/mkyrkosh/Documents/learning/code/kroogom/code/claude-workshop && npm install
+npm install  # run from repo root
 ```
 
 - [ ] **Step 8: Commit**
@@ -2074,7 +2074,7 @@ export default function EditItemPage({ params }: { params: Promise<{ id: string 
 - [ ] **Step 8: Verify the web app runs**
 
 ```bash
-cd /Users/mkyrkosh/Documents/learning/code/kroogom/code/claude-workshop && npm run dev
+npm run dev  # run from repo root
 ```
 
 Expected: Web app at `http://localhost:3000`, API at `http://localhost:3001`. Navigate to `/items`, create/edit/delete items.
@@ -2792,7 +2792,7 @@ echo "# UI Mocks Index\n\n| # | Name | File | Status | Created | Target |\n|---|
 
 - [ ] **Step 3: Copy all 19 custom skills from kroogom**
 
-Copy each skill directory from `/Users/mkyrkosh/Documents/learning/code/kroogom/code/kroogom/.claude/skills/` to `.claude/skills/`. Then adapt each one:
+Copy each skill directory from `<path-to-kroogom>/.claude/skills/` to `.claude/skills/`. Then adapt each one:
 
 - Replace "Kroogom" with "Workshop Project" throughout
 - Replace domain-specific references (events, RSVPs, groups, bookmarks, invitations, categories, notifications, chat) with generic references or Items examples
@@ -2816,8 +2816,8 @@ For `flutter-audit` and `fullstack-audit`, also copy their `references/` subdire
 
 ```bash
 mkdir -p .agents/skills
-cp -r /Users/mkyrkosh/Documents/learning/code/kroogom/code/kroogom/.agents/skills/shadcn .agents/skills/
-cp -r /Users/mkyrkosh/Documents/learning/code/kroogom/code/kroogom/.agents/skills/ui-ux-pro-max .agents/skills/
+cp -r <path-to-kroogom>/.agents/skills/shadcn .agents/skills/
+cp -r <path-to-kroogom>/.agents/skills/ui-ux-pro-max .agents/skills/
 ```
 
 - [ ] **Step 5: Write `.claude/CLAUDE.md`** (root monorepo guide)

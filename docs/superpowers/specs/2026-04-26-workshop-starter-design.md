@@ -349,13 +349,13 @@ Riverpod providers + Dio repository. Freezed model for `Item`.
 
 ### `turbo.json`
 
-Same pipeline as kroogom but with `test` added:
+Same task config as kroogom but with `test` added (Turborepo v2 uses `tasks` instead of `pipeline`):
 
 ```json
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
