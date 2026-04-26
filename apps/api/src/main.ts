@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core'
-import { Logger, ValidationPipe, VersioningType } from '@nestjs/common'
+import { Logger, ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import helmet from 'helmet'
 import compression from 'compression'
@@ -16,7 +16,7 @@ async function bootstrap() {
 
   // CORS
   const allowedOrigins = configService.get('cors.origins') || []
-  const corsOrigins = allowedOrigins.length ? allowedOrigins : [/localhost:\d+$/]
+  const corsOrigins = allowedOrigins.length ? allowedOrigins : [/^https?:\/\/localhost:\d+$/]
 
   app.enableCors({
     origin: corsOrigins,
@@ -40,9 +40,8 @@ async function bootstrap() {
     }),
   )
 
-  // API versioning
+  // API prefix
   app.setGlobalPrefix('v1')
-  app.enableVersioning({ type: VersioningType.URI })
 
   // Swagger (non-production only)
   if (!isProduction) {
