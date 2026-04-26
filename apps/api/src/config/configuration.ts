@@ -4,7 +4,11 @@ export default () => ({
     url: process.env.DATABASE_URL,
   },
   cors: {
-    origins: process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',').map((o) => o.trim()) : [],
+    origins: process.env.CORS_ORIGINS
+      ? process.env.CORS_ORIGINS.split(',')
+          .map((o) => o.trim())
+          .filter(Boolean)
+      : [],
   },
   environment: process.env.NODE_ENV || 'development',
   isProduction: process.env.NODE_ENV === 'production',
