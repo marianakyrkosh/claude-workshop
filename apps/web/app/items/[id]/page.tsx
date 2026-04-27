@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useItem, useDeleteItem } from '@/hooks/use-items'
 import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 
 export default function ItemDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
@@ -21,10 +22,13 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">{item.title}</h1>
         <div className="flex gap-2">
-          <Link href={`/items/${id}/edit`} className="rounded-lg border px-3 py-1 hover:bg-zinc-50">
-            Edit
-          </Link>
-          <button
+          <Button variant="outline" size="sm" asChild>
+            <Link href={`/items/${id}/edit`}>Edit</Link>
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="text-destructive hover:text-destructive"
             onClick={() =>
               deleteItem.mutate(id, {
                 onSuccess: () => {
@@ -33,17 +37,16 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
                 },
               })
             }
-            className="rounded-lg border border-red-200 px-3 py-1 text-red-500 hover:bg-red-50"
           >
             Delete
-          </button>
+          </Button>
         </div>
       </div>
-      {item.description && <p className="text-zinc-600">{item.description}</p>}
-      <p className="text-sm text-zinc-400">Created: {new Date(item.createdAt).toLocaleDateString()}</p>
-      <Link href="/items" className="text-blue-600 hover:underline">
-        &larr; Back to items
-      </Link>
+      {item.description && <p className="text-muted-foreground">{item.description}</p>}
+      <p className="text-sm text-muted-foreground">Created: {new Date(item.createdAt).toLocaleDateString()}</p>
+      <Button variant="link" className="px-0" asChild>
+        <Link href="/items">&larr; Back to items</Link>
+      </Button>
     </div>
   )
 }

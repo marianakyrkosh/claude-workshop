@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { useItems, useDeleteItem } from '@/hooks/use-items'
 import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 
 export default function ItemsPage() {
   const { data, isLoading, error } = useItems()
@@ -15,39 +17,42 @@ export default function ItemsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Items</h1>
-        <Link href="/items/new" className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
-          New Item
-        </Link>
+        <Button asChild>
+          <Link href="/items/new">New Item</Link>
+        </Button>
       </div>
 
-      {data?.data.length === 0 && <p className="text-zinc-500">No items yet. Create your first one!</p>}
+      {data?.data.length === 0 && <p className="text-muted-foreground">No items yet. Create your first one!</p>}
 
       <ul className="space-y-3">
         {data?.data.map((item) => (
-          <li key={item.id} className="flex items-center justify-between rounded-lg border p-4">
-            <Link href={`/items/${item.id}`} className="flex-1">
-              <h2 className="font-semibold">{item.title}</h2>
-              {item.description && <p className="text-sm text-zinc-500">{item.description}</p>}
-            </Link>
-            <div className="ml-4 flex gap-2">
-              <Link
-                href={`/items/${item.id}/edit`}
-                className="text-sm text-blue-600 hover:text-blue-800"
-              >
-                Edit
-              </Link>
-              <button
-                onClick={() => {
-                  deleteItem.mutate(item.id, {
-                    onSuccess: () => toast.success('Item deleted'),
-                    onError: (err) => toast.error(err.message),
-                  })
-                }}
-                className="text-sm text-red-500 hover:text-red-700"
-              >
-                Delete
-              </button>
-            </div>
+          <li key={item.id}>
+            <Card>
+              <CardContent className="flex items-center justify-between p-4">
+                <Link href={`/items/${item.id}`} className="flex-1">
+                  <h2 className="font-semibold">{item.title}</h2>
+                  {item.description && <p className="text-sm text-muted-foreground">{item.description}</p>}
+                </Link>
+                <div className="ml-4 flex gap-2">
+                  <Button variant="ghost" size="sm" asChild>
+                    <Link href={`/items/${item.id}/edit`}>Edit</Link>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-destructive hover:text-destructive"
+                    onClick={() => {
+                      deleteItem.mutate(item.id, {
+                        onSuccess: () => toast.success('Item deleted'),
+                        onError: (err) => toast.error(err.message),
+                      })
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </li>
         ))}
       </ul>

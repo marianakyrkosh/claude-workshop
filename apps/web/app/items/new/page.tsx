@@ -4,6 +4,10 @@ import { useRouter } from 'next/navigation'
 import { useCreateItem } from '@/hooks/use-items'
 import { toast } from 'sonner'
 import { useState, type FormEvent } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
 
 export default function NewItemPage() {
   const router = useRouter()
@@ -29,39 +33,31 @@ export default function NewItemPage() {
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Create Item</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="title" className="block text-sm font-medium">
-            Title
-          </label>
-          <input
+        <div className="space-y-2">
+          <Label htmlFor="title">Title</Label>
+          <Input
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
             maxLength={200}
-            className="mt-1 w-full rounded-lg border px-3 py-2"
+            placeholder="Enter item title"
           />
         </div>
-        <div>
-          <label htmlFor="description" className="block text-sm font-medium">
-            Description
-          </label>
-          <textarea
+        <div className="space-y-2">
+          <Label htmlFor="description">Description</Label>
+          <Textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             maxLength={2000}
             rows={4}
-            className="mt-1 w-full rounded-lg border px-3 py-2"
+            placeholder="Enter item description (optional)"
           />
         </div>
-        <button
-          type="submit"
-          disabled={createItem.isPending}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
-        >
+        <Button type="submit" disabled={createItem.isPending}>
           {createItem.isPending ? 'Creating...' : 'Create'}
-        </button>
+        </Button>
       </form>
     </div>
   )
