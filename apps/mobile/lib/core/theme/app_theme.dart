@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
+import 'app_spacing.dart';
 
 class AppTheme {
   static ThemeData get light => ThemeData(
@@ -14,9 +15,9 @@ class AppTheme {
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primaryBlue,
             foregroundColor: Colors.white,
-            minimumSize: const Size(double.infinity, 56),
+            minimumSize: const Size(double.infinity, AppSizes.buttonHeight),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(AppRadius.md),
             ),
           ),
         ),

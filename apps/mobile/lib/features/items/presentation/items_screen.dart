@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/widgets/app_card.dart';
 import '../providers/items_provider.dart';
 
 class ItemsScreen extends ConsumerWidget {
@@ -23,7 +25,10 @@ class ItemsScreen extends ConsumerWidget {
       body: itemsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(
-          child: Text('Error: $error', style: TextStyle(color: AppColors.accentRed)),
+          child: Text(
+            'Error: $error',
+            style: TextStyle(color: AppColors.accentRed),
+          ),
         ),
         data: (result) {
           if (result.data.isEmpty) {
@@ -37,20 +42,16 @@ class ItemsScreen extends ConsumerWidget {
           return RefreshIndicator(
             onRefresh: () => ref.refresh(itemsProvider.future),
             child: ListView.separated(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               itemCount: result.data.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 8),
+              separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
               itemBuilder: (context, index) {
                 final item = result.data[index];
-                return Card(
-                  child: ListTile(
-                    title: Text(item.title, style: AppTypography.body.copyWith(fontWeight: FontWeight.w600)),
-                    subtitle: item.description != null
-                        ? Text(item.description!, style: AppTypography.bodySmall, maxLines: 2, overflow: TextOverflow.ellipsis)
-                        : null,
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: () => context.push(AppRoutes.itemDetailPath(item.id)),
-                  ),
+                return AppCard(
+                  title: item.title,
+                  subtitle: item.description,
+                  onTap: () =>
+                      context.push(AppRoutes.itemDetailPath(item.id)),
                 );
               },
             ),

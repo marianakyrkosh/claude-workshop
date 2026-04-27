@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/widgets/app_form_fields.dart';
+import '../../../models/constants.dart';
 import '../providers/items_provider.dart';
 
 class CreateItemScreen extends ConsumerStatefulWidget {
@@ -53,42 +56,32 @@ class _CreateItemScreenState extends ConsumerState<CreateItemScreen> {
     return Scaffold(
       appBar: AppBar(title: Text('Create Item', style: AppTypography.h3)),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           children: [
-            TextField(
+            AppTextField(
               controller: _titleController,
-              decoration: InputDecoration(
-                labelText: 'Title',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              maxLength: 200,
+              label: 'Title',
+              maxLength: ItemConstraints.titleMaxLength,
             ),
-            const SizedBox(height: 16),
-            TextField(
+            const SizedBox(height: AppSpacing.lg),
+            AppTextField(
               controller: _descriptionController,
-              decoration: InputDecoration(
-                labelText: 'Description (optional)',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
+              label: 'Description (optional)',
+              maxLength: ItemConstraints.descriptionMaxLength,
               maxLines: 4,
-              maxLength: 2000,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xl),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _isLoading ? null : _submit,
                 child: _isLoading
                     ? const SizedBox(
-                        height: 20,
-                        width: 20,
+                        height: AppSizes.iconSm,
+                        width: AppSizes.iconSm,
                         child: CircularProgressIndicator(
-                          strokeWidth: 2,
+                          strokeWidth: AppSizes.borderWidthFocused,
                           color: Colors.white,
                         ),
                       )

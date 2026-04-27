@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../providers/items_provider.dart';
 
@@ -49,15 +50,15 @@ class ItemDetailScreen extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(child: Text('Error: $error')),
         data: (item) => Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(item.title, style: AppTypography.h1),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               if (item.description != null)
                 Text(item.description!, style: AppTypography.body),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
               Text(
                 'Created: ${item.createdAt.toLocal().toString().split(' ').first}',
                 style: AppTypography.caption,
