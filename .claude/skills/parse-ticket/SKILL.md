@@ -19,6 +19,10 @@ Turn raw requirements into a normalized change request that the rest of the feat
 
 Write to `.claude/workitems/feedback/REQUEST-[slug].md`. Create the directory if missing.
 
+## Figma context
+
+If the description includes a Figma URL (`figma.com/design/...?node-id=...`), extract the `fileKey` and `nodeId` and call the Figma MCP `get_design_context` (or `get_screenshot`) to enrich the request. Embed key visual notes — layout, components, states — directly in the change request so later phases don't have to re-fetch.
+
 ## Required sections
 
 - **Summary** — one or two sentences of intent

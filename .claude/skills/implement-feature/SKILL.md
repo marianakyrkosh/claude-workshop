@@ -13,6 +13,7 @@ Execute the plan. The goal is to ship complete, tested checklist items — not p
 - `.claude/workitems/development/[slug]-design.md` — the architectural context
 - `.claude/workitems/development/[slug]-learnings.md` — append notes here as you go
 - `.claude/mocks/INDEX.md` if a UI mock exists for the feature
+- Figma node IDs from the design doc — call the Figma MCP `get_design_context` or `get_screenshot` when you need to verify a visual detail mid-implementation
 
 ## Loop
 

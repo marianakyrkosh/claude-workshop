@@ -26,6 +26,10 @@ Turn an HTML mock into a real React component or page in `apps/web`.
 7. Reuse existing shadcn/ui components instead of rebuilding (`Button`, `Card`, `Input`, etc.).
 8. Update `INDEX.md`: change Status to `Implemented`, fill in the Target column with the new file path.
 
+## Figma cross-check
+
+If the mock has a Figma node ID in its top comment, call the Figma MCP `get_design_context` once before converting — sometimes the design has shifted since the mock was generated. Update the mock first if the Figma is canonical, then convert.
+
 ## Guardrails
 
 - TypeScript only. Strict types — no `any`.

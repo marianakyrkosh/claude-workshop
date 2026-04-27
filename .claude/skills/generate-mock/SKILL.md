@@ -14,6 +14,10 @@ Produce a quick HTML/Tailwind mock to align on visuals before writing real code.
 
 Create folder if missing.
 
+## Figma source
+
+If a Figma URL is provided, call the Figma MCP `get_design_context` (or `get_screenshot`) to pull the visual reference, then translate it into Tailwind. Capture the source node ID in a comment block at the top of the HTML file so the mock can be regenerated later if the design changes.
+
 ## Naming
 
 - 3-digit zero-padded index: `001`, `002`, ..., `099`

@@ -12,6 +12,7 @@ Convert a parsed change request into an actionable plan. Calls out dependencies 
 - `.claude/workitems/feedback/REQUEST-[slug].md`
 - Root `CLAUDE.md` and the per-app guides (`apps/api/.claude/CLAUDE.md`, `apps/web/.claude/CLAUDE.md`, `apps/mobile/.claude/CLAUDE.md`)
 - Existing UI mocks in `.claude/mocks/` if any apply
+- Figma node IDs captured in the change request — call the Figma MCP `get_design_context` to pull layouts, component references, and design tokens into the design doc
 
 ## Outputs
 
