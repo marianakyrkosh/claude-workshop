@@ -16,7 +16,7 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
   const t = useTranslations('items')
 
   if (isLoading) return <p>{t('loading')}</p>
-  if (error) return <p className="text-red-500">{t('error', { message: error.message })}</p>
+  if (error) return <p className="text-destructive">{t('error', { message: error.message })}</p>
   if (!item) return <p>{t('notFound')}</p>
 
   return (
