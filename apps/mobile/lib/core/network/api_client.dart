@@ -44,6 +44,8 @@ final dioProvider = Provider<Dio>((ref) {
             error: exception,
             response: error.response,
             type: error.type,
+            stackTrace: error.stackTrace,
+            message: error.message,
           ),
         );
       },
