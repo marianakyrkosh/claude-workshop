@@ -29,17 +29,25 @@ export default function ItemsPage() {
               <h2 className="font-semibold">{item.title}</h2>
               {item.description && <p className="text-sm text-zinc-500">{item.description}</p>}
             </Link>
-            <button
-              onClick={() => {
-                deleteItem.mutate(item.id, {
-                  onSuccess: () => toast.success('Item deleted'),
-                  onError: (err) => toast.error(err.message),
-                })
-              }}
-              className="ml-4 text-sm text-red-500 hover:text-red-700"
-            >
-              Delete
-            </button>
+            <div className="ml-4 flex gap-2">
+              <Link
+                href={`/items/${item.id}/edit`}
+                className="text-sm text-blue-600 hover:text-blue-800"
+              >
+                Edit
+              </Link>
+              <button
+                onClick={() => {
+                  deleteItem.mutate(item.id, {
+                    onSuccess: () => toast.success('Item deleted'),
+                    onError: (err) => toast.error(err.message),
+                  })
+                }}
+                className="text-sm text-red-500 hover:text-red-700"
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>
