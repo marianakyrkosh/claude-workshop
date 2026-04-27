@@ -1,0 +1,105 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Workshop Starter",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+
+  "homeSubtitle": "A full-stack starter for building apps with Claude.",
+  "@homeSubtitle": {
+    "description": "Subtitle text on the home screen"
+  },
+
+  "viewItems": "View Items",
+  "@viewItems": {
+    "description": "Button label to navigate to the items list"
+  },
+
+  "itemsTitle": "Items",
+  "@itemsTitle": {
+    "description": "AppBar title for the items list screen"
+  },
+
+  "itemsEmpty": "No items yet. Tap + to create one!",
+  "@itemsEmpty": {
+    "description": "Empty state message when no items exist"
+  },
+
+  "itemDetailTitle": "Item Detail",
+  "@itemDetailTitle": {
+    "description": "AppBar title for the item detail screen"
+  },
+
+  "deleteItemTitle": "Delete Item",
+  "@deleteItemTitle": {
+    "description": "Title of the delete confirmation dialog"
+  },
+
+  "deleteItemConfirmation": "Are you sure you want to delete this item?",
+  "@deleteItemConfirmation": {
+    "description": "Confirmation message in the delete dialog"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button label"
+  },
+
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete button label"
+  },
+
+  "createdDate": "Created: {date}",
+  "@createdDate": {
+    "description": "Label showing the creation date of an item",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "2024-01-15"
+      }
+    }
+  },
+
+  "createItemTitle": "Create Item",
+  "@createItemTitle": {
+    "description": "AppBar title for the create item screen"
+  },
+
+  "editItemTitle": "Edit Item",
+  "@editItemTitle": {
+    "description": "AppBar title for the edit item screen"
+  },
+
+  "fieldTitle": "Title",
+  "@fieldTitle": {
+    "description": "Label for the title input field"
+  },
+
+  "fieldDescriptionOptional": "Description (optional)",
+  "@fieldDescriptionOptional": {
+    "description": "Label for the optional description input field"
+  },
+
+  "createButton": "Create",
+  "@createButton": {
+    "description": "Create button label"
+  },
+
+  "saveButton": "Save",
+  "@saveButton": {
+    "description": "Save button label"
+  },
+
+  "errorGeneric": "Error: {message}",
+  "@errorGeneric": {
+    "description": "Generic error message with details",
+    "placeholders": {
+      "message": {
+        "type": "String",
+        "example": "Something went wrong"
+      }
+    }
+  }
+}

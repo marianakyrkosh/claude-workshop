@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -13,10 +15,11 @@ class ItemsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final itemsAsync = ref.watch(itemsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Items', style: AppTypography.h2)),
+      appBar: AppBar(title: Text(l10n.itemsTitle, style: AppTypography.h2)),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push(AppRoutes.createItem),
         backgroundColor: AppColors.primaryBlue,
@@ -26,7 +29,7 @@ class ItemsScreen extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(
           child: Text(
-            'Error: $error',
+            l10n.errorGeneric('$error'),
             style: TextStyle(color: AppColors.accentRed),
           ),
         ),
@@ -34,7 +37,7 @@ class ItemsScreen extends ConsumerWidget {
           if (result.data.isEmpty) {
             return Center(
               child: Text(
-                'No items yet. Tap + to create one!',
+                l10n.itemsEmpty,
                 style: AppTypography.bodySmall,
               ),
             );
@@ -44,7 +47,8 @@ class ItemsScreen extends ConsumerWidget {
             child: ListView.separated(
               padding: const EdgeInsets.all(AppSpacing.lg),
               itemCount: result.data.length,
-              separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
+              separatorBuilder: (_, __) =>
+                  const SizedBox(height: AppSpacing.sm),
               itemBuilder: (context, index) {
                 final item = result.data[index];
                 return AppCard(

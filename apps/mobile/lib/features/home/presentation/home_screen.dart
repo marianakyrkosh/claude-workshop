@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
@@ -9,8 +11,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: Text('Workshop Starter', style: AppTypography.h2)),
+      appBar: AppBar(title: Text(l10n.appTitle, style: AppTypography.h2)),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.xl),
@@ -18,14 +21,14 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'A full-stack starter for building apps with Claude.',
+                l10n.homeSubtitle,
                 style: AppTypography.body,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: AppSpacing.xl),
               ElevatedButton(
                 onPressed: () => context.push(AppRoutes.items),
-                child: const Text('View Items'),
+                child: Text(l10n.viewItems),
               ),
             ],
           ),

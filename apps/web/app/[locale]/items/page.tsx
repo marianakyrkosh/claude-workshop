@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { useItems, useDeleteItem } from '@/hooks/use-items'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -9,20 +10,21 @@ import { Card, CardContent } from '@/components/ui/card'
 export default function ItemsPage() {
   const { data, isLoading, error } = useItems()
   const deleteItem = useDeleteItem()
+  const t = useTranslations('items')
 
-  if (isLoading) return <p>Loading...</p>
-  if (error) return <p className="text-red-500">Error: {error.message}</p>
+  if (isLoading) return <p>{t('loading')}</p>
+  if (error) return <p className="text-red-500">{t('error', { message: error.message })}</p>
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Items</h1>
+        <h1 className="text-2xl font-bold">{t('title')}</h1>
         <Button asChild>
-          <Link href="/items/new">New Item</Link>
+          <Link href="/items/new">{t('newItem')}</Link>
         </Button>
       </div>
 
-      {data?.data.length === 0 && <p className="text-muted-foreground">No items yet. Create your first one!</p>}
+      {data?.data.length === 0 && <p className="text-muted-foreground">{t('empty')}</p>}
 
       <ul className="space-y-3">
         {data?.data.map((item) => (
@@ -35,7 +37,7 @@ export default function ItemsPage() {
                 </Link>
                 <div className="ml-4 flex gap-2">
                   <Button variant="ghost" size="sm" asChild>
-                    <Link href={`/items/${item.id}/edit`}>Edit</Link>
+                    <Link href={`/items/${item.id}/edit`}>{t('actions.edit')}</Link>
                   </Button>
                   <Button
                     variant="ghost"
@@ -43,12 +45,12 @@ export default function ItemsPage() {
                     className="text-destructive hover:text-destructive"
                     onClick={() => {
                       deleteItem.mutate(item.id, {
-                        onSuccess: () => toast.success('Item deleted'),
+                        onSuccess: () => toast.success(t('toast.deleted')),
                         onError: (err) => toast.error(err.message),
                       })
                     }}
                   >
-                    Delete
+                    {t('actions.delete')}
                   </Button>
                 </div>
               </CardContent>

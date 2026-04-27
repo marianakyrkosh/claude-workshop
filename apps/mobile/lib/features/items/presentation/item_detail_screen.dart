@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -13,11 +15,12 @@ class ItemDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final itemAsync = ref.watch(itemProvider(id));
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Item Detail', style: AppTypography.h3),
+        title: Text(l10n.itemDetailTitle, style: AppTypography.h3),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -29,11 +32,20 @@ class ItemDetailScreen extends ConsumerWidget {
               final confirmed = await showDialog<bool>(
                 context: context,
                 builder: (ctx) => AlertDialog(
-                  title: const Text('Delete Item'),
-                  content: const Text('Are you sure you want to delete this item?'),
+                  title: Text(l10n.deleteItemTitle),
+                  content: Text(l10n.deleteItemConfirmation),
                   actions: [
-                    TextButton(onPressed: () => ctx.pop(false), child: const Text('Cancel')),
-                    TextButton(onPressed: () => ctx.pop(true), child: Text('Delete', style: TextStyle(color: AppColors.accentRed))),
+                    TextButton(
+                      onPressed: () => ctx.pop(false),
+                      child: Text(l10n.cancel),
+                    ),
+                    TextButton(
+                      onPressed: () => ctx.pop(true),
+                      child: Text(
+                        l10n.delete,
+                        style: TextStyle(color: AppColors.accentRed),
+                      ),
+                    ),
                   ],
                 ),
               );
@@ -48,7 +60,8 @@ class ItemDetailScreen extends ConsumerWidget {
       ),
       body: itemAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('Error: $error')),
+        error: (error, _) =>
+            Center(child: Text(l10n.errorGeneric('$error'))),
         data: (item) => Padding(
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
@@ -60,7 +73,9 @@ class ItemDetailScreen extends ConsumerWidget {
                 Text(item.description!, style: AppTypography.body),
               const SizedBox(height: AppSpacing.xl),
               Text(
-                'Created: ${item.createdAt.toLocal().toString().split(' ').first}',
+                l10n.createdDate(
+                  item.createdAt.toLocal().toString().split(' ').first,
+                ),
                 style: AppTypography.caption,
               ),
             ],

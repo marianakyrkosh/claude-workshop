@@ -1,39 +1,30 @@
 'use client'
 
-import { use, useState, useEffect, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import { useItem, useUpdateItem } from '@/hooks/use-items'
+import { useTranslations } from 'next-intl'
+import { useCreateItem } from '@/hooks/use-items'
 import { toast } from 'sonner'
+import { useState, type FormEvent } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 
-export default function EditItemPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params)
-  const { data: item, isLoading } = useItem(id)
-  const updateItem = useUpdateItem(id)
+export default function NewItemPage() {
   const router = useRouter()
+  const createItem = useCreateItem()
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-
-  useEffect(() => {
-    if (item) {
-      setTitle(item.title)
-      setDescription(item.description || '')
-    }
-  }, [item])
-
-  if (isLoading) return <p>Loading...</p>
+  const t = useTranslations('items')
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    updateItem.mutate(
+    createItem.mutate(
       { title, description: description || undefined },
       {
         onSuccess: () => {
-          toast.success('Item updated')
-          router.push(`/items/${id}`)
+          toast.success(t('toast.created'))
+          router.push('/items')
         },
         onError: (err) => toast.error(err.message),
       },
@@ -42,30 +33,32 @@ export default function EditItemPage({ params }: { params: Promise<{ id: string 
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Edit Item</h1>
+      <h1 className="text-2xl font-bold">{t('form.createTitle')}</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="title">Title</Label>
+          <Label htmlFor="title">{t('form.titleLabel')}</Label>
           <Input
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
             maxLength={200}
+            placeholder={t('form.titlePlaceholder')}
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="description">Description</Label>
+          <Label htmlFor="description">{t('form.descriptionLabel')}</Label>
           <Textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             maxLength={2000}
             rows={4}
+            placeholder={t('form.descriptionPlaceholder')}
           />
         </div>
-        <Button type="submit" disabled={updateItem.isPending}>
-          {updateItem.isPending ? 'Saving...' : 'Save'}
+        <Button type="submit" disabled={createItem.isPending}>
+          {createItem.isPending ? t('pending.creating') : t('actions.create')}
         </Button>
       </form>
     </div>

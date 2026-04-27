@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/app_form_fields.dart';
@@ -46,8 +48,9 @@ class _EditItemScreenState extends ConsumerState<EditItemScreen> {
       if (mounted) context.pop();
     } catch (e) {
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
+          SnackBar(content: Text(l10n.errorGeneric('$e'))),
         );
       }
     } finally {
@@ -57,13 +60,17 @@ class _EditItemScreenState extends ConsumerState<EditItemScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final itemAsync = ref.watch(itemProvider(widget.id));
 
     return Scaffold(
-      appBar: AppBar(title: Text('Edit Item', style: AppTypography.h3)),
+      appBar: AppBar(
+        title: Text(l10n.editItemTitle, style: AppTypography.h3),
+      ),
       body: itemAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('Error: $error')),
+        error: (error, _) =>
+            Center(child: Text(l10n.errorGeneric('$error'))),
         data: (item) {
           if (!_initialized) {
             _titleController.text = item.title;
@@ -76,13 +83,13 @@ class _EditItemScreenState extends ConsumerState<EditItemScreen> {
               children: [
                 AppTextField(
                   controller: _titleController,
-                  label: 'Title',
+                  label: l10n.fieldTitle,
                   maxLength: ItemConstraints.titleMaxLength,
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 AppTextField(
                   controller: _descriptionController,
-                  label: 'Description (optional)',
+                  label: l10n.fieldDescriptionOptional,
                   maxLength: ItemConstraints.descriptionMaxLength,
                   maxLines: 4,
                 ),
@@ -100,7 +107,7 @@ class _EditItemScreenState extends ConsumerState<EditItemScreen> {
                               color: Colors.white,
                             ),
                           )
-                        : const Text('Save'),
+                        : Text(l10n.saveButton),
                   ),
                 ),
               ],
