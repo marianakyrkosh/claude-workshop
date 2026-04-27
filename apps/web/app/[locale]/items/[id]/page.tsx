@@ -1,8 +1,8 @@
 'use client'
 
 import { use } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import { useItem, useDeleteItem } from '@/hooks/use-items'
 import { toast } from 'sonner'
