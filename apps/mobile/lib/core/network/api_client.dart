@@ -31,7 +31,9 @@ final dioProvider = Provider<Dio>((ref) {
         } else if (statusCode != null && statusCode >= 500) {
           exception = ServerException(message);
         } else if (error.type == DioExceptionType.connectionError ||
-            error.type == DioExceptionType.connectionTimeout) {
+            error.type == DioExceptionType.connectionTimeout ||
+            error.type == DioExceptionType.receiveTimeout ||
+            error.type == DioExceptionType.sendTimeout) {
           exception = const NetworkException('Unable to connect to server');
         } else {
           exception = ServerException(message);

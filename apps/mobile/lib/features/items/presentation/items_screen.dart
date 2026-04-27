@@ -43,7 +43,10 @@ class ItemsScreen extends ConsumerWidget {
             );
           }
           return RefreshIndicator(
-            onRefresh: () => ref.refresh(itemsProvider.future),
+            onRefresh: () async {
+              ref.invalidate(itemsProvider);
+              await ref.read(itemsProvider.future);
+            },
             child: ListView.separated(
               padding: const EdgeInsets.all(AppSpacing.lg),
               itemCount: result.data.length,
