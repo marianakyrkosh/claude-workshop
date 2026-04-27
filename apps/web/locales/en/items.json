@@ -1,0 +1,33 @@
+{
+  "title": "Items",
+  "newItem": "New Item",
+  "empty": "No items yet. Create your first one!",
+  "loading": "Loading...",
+  "notFound": "Item not found",
+  "error": "Error: {message}",
+  "backToItems": "Back to items",
+  "created": "Created: {date}",
+  "actions": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "Create",
+    "save": "Save"
+  },
+  "form": {
+    "createTitle": "Create Item",
+    "editTitle": "Edit Item",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Enter item title",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Enter item description (optional)"
+  },
+  "pending": {
+    "creating": "Creating...",
+    "saving": "Saving..."
+  },
+  "toast": {
+    "created": "Item created",
+    "updated": "Item updated",
+    "deleted": "Item deleted"
+  }
+}

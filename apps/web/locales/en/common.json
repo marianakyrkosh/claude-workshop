@@ -1,0 +1,12 @@
+{
+  "appName": "Workshop",
+  "nav": {
+    "home": "Workshop",
+    "items": "Items"
+  },
+  "home": {
+    "title": "Workshop Starter",
+    "description": "A full-stack monorepo template for building apps with Claude.",
+    "viewItems": "View Items"
+  }
+}
