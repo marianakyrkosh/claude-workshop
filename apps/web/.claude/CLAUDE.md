@@ -56,7 +56,7 @@ e2e/                         Playwright tests
 1. **Server components by default.** Add `'use client'` only when the file uses state, effects, refs, or browser APIs.
 2. **Always use the locale-aware Link** from `@/i18n/navigation` — never `next/link` directly. The middleware handles prefix logic.
 3. **Translations live in `locales/en/`** — `useTranslations('namespace')` in client, `getTranslations('namespace')` in server. Never hardcode user-visible strings.
-4. **shadcn primitives** (`<Button>`, `<Card>`, `<Input>`, `<Textarea>`, `<Label>`) — don't rebuild these. Add new shadcn components with `npx shadcn add <name>`.
+4. **shadcn primitives** (`<Button>`, `<Card>`, `<Input>`, `<Textarea>`, `<Label>`) — don't rebuild these. Add new shadcn components with `npx shadcn@latest add <name>`.
 5. **Static `process.env.NEXT_PUBLIC_*` access only** — don't use bracket notation or it won't inline.
 6. **No hardcoded visual values.** Use Tailwind tokens (`bg-primary`, `text-muted-foreground`, `text-destructive`, `space-y-6`) and CSS variables defined in `globals.css`.
 7. **Edge/middleware code can't use Node APIs** (`fs`, `path`, etc.) — keep `middleware.ts` clean.
