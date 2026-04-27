@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useCreateItem } from '@/hooks/use-items'
 import { toast } from 'sonner'
-import { useState } from 'react'
+import { useState, type FormEvent } from 'react'
 
 export default function NewItemPage() {
   const router = useRouter()
@@ -11,7 +11,7 @@ export default function NewItemPage() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     createItem.mutate(
       { title, description: description || undefined },

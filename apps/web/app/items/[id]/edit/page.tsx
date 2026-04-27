@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useState, useEffect } from 'react'
+import { use, useState, useEffect, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { useItem, useUpdateItem } from '@/hooks/use-items'
 import { toast } from 'sonner'
@@ -22,7 +22,7 @@ export default function EditItemPage({ params }: { params: Promise<{ id: string 
 
   if (isLoading) return <p>Loading...</p>
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     updateItem.mutate(
       { title, description: description || undefined },

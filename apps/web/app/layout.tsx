@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Providers } from './providers'
 import './globals.css'
@@ -25,12 +26,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Providers>
           <header className="border-b px-6 py-4">
             <nav className="mx-auto flex max-w-4xl items-center gap-6">
-              <a href="/" className="text-lg font-semibold">
+              <Link href="/" className="text-lg font-semibold">
                 Workshop
-              </a>
-              <a href="/items" className="text-sm text-zinc-600 hover:text-zinc-900">
+              </Link>
+              <Link href="/items" className="text-sm text-zinc-600 hover:text-zinc-900">
                 Items
-              </a>
+              </Link>
             </nav>
           </header>
           <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-8">{children}</main>

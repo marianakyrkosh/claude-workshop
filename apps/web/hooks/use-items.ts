@@ -13,10 +13,11 @@ interface Item {
 const API = env.API_URL
 
 async function fetchJson<T>(url: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(url, {
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    ...options,
-  })
+  const headers: Record<string, string> = { ...options?.headers as Record<string, string> }
+  if (options?.body) {
+    headers['Content-Type'] = 'application/json'
+  }
+  const res = await fetch(url, { ...options, headers })
   if (!res.ok) {
     const body = await res.json().catch(() => ({}))
     throw new Error(body.message || `Request failed with status ${res.status}`)
