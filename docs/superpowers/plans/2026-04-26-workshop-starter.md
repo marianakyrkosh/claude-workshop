@@ -1,8 +1,5 @@
 # Workshop Starter Project Implementation Plan
 
-## Claude Session
-41ce009b-3a06-4806-87c0-b7591759162e
-
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Convert claude-workshop from a standalone Next.js app into a Turborepo monorepo with web (Next.js 16), API (NestJS), and mobile (Flutter) apps, including one Items/Notes CRUD example feature and all Claude skills from kroogom.
