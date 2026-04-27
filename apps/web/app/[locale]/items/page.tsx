@@ -13,7 +13,7 @@ export default function ItemsPage() {
   const t = useTranslations('items')
 
   if (isLoading) return <p>{t('loading')}</p>
-  if (error) return <p className="text-red-500">{t('error', { message: error.message })}</p>
+  if (error) return <p className="text-destructive">{t('error', { message: error.message })}</p>
 
   return (
     <div className="space-y-6">
