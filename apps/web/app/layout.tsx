@@ -5,7 +5,7 @@ import { Providers } from './providers'
 import './globals.css'
 
 const geistSans = Geist({
-  variable: '--font-geist-sans',
+  variable: '--font-sans',
   subsets: ['latin'],
 })
 
@@ -24,17 +24,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <Providers>
-          <header className="border-b px-6 py-4">
-            <nav className="mx-auto flex max-w-4xl items-center gap-6">
+          <header className="border-b">
+            <nav className="mx-auto flex max-w-4xl items-center gap-6 py-4">
               <Link href="/" className="text-lg font-semibold">
                 Workshop
               </Link>
-              <Link href="/items" className="text-sm text-zinc-600 hover:text-zinc-900">
+              <Link href="/items" className="text-sm text-muted-foreground hover:text-foreground">
                 Items
               </Link>
             </nav>
           </header>
-          <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-8">{children}</main>
+          <main className="mx-auto w-full max-w-4xl flex-1 py-8">{children}</main>
         </Providers>
       </body>
     </html>
