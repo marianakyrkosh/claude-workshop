@@ -26,6 +26,9 @@ jobs:
       - name: Install workspace deps
         run: npm ci
         working-directory: .
+      - name: Build shared packages
+        run: npm run build --workspace=@repo/types
+        working-directory: .
       - name: Generate Prisma client
         run: npx prisma generate
       - name: Lint
@@ -49,6 +52,9 @@ jobs:
           cache: npm
       - name: Install workspace deps
         run: npm ci
+        working-directory: .
+      - name: Build shared packages
+        run: npm run build --workspace=@repo/types
         working-directory: .
       - name: Lint
         run: npm run lint
