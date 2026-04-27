@@ -9,6 +9,7 @@ This directory holds the workshop's Claude Code setup: shared settings, custom s
 ├── CLAUDE.md                       Root monorepo guide (loaded automatically)
 ├── settings.json                   Shared config — plugins, hooks, MCP servers
 ├── settings.local.json.example     Personal permission allow list (copy to settings.local.json)
+├── personas/                       Role-based answer perspectives (tech-lead, backend-engineer, etc.)
 ├── skills/                         Custom slash commands
 ├── workitems/                      Feature lifecycle artifacts
 │   ├── feedback/                   Change requests (REQUEST-<slug>.md)
@@ -87,6 +88,20 @@ The plugins in `settings.json` add more commands automatically. The most useful:
 - `/insights` — usage analytics for your sessions
 
 Run `/help` to see the full list at any time.
+
+## Personas
+
+Reference a persona by name in your prompt to nudge the answer toward a specific role. See `personas/README.md` for details.
+
+| Persona | When to use |
+|---------|-------------|
+| `tech-lead` | Direction, scope, tradeoffs |
+| `backend-engineer` | NestJS / Prisma / DTO / contracts |
+| `frontend-engineer` | Next.js / React Query / shadcn / next-intl |
+| `mobile-engineer` | Flutter / Riverpod / GoRouter / theme tokens |
+| `code-reviewer` | Pre-push review, second pair of eyes |
+
+Example: *"Acting as the **tech-lead** persona, review this design doc and tell me what's getting deferred."*
 
 ## Conventions
 
