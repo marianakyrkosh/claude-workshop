@@ -15,12 +15,19 @@ A safety-net commit during active work. Local only — not pushed and not a subs
    ```
    If nothing changed, exit with "Nothing to checkpoint."
 
-2. Stage everything:
-   ```bash
-   git add -A
-   ```
+2. Review what's about to be staged. **Skim for accidentally-tracked secrets** — `.env` files, dumps, credentials, anything that looks like a key. If you see something that doesn't belong, stop and tell the user before staging.
 
-3. Commit with a checkpoint marker:
+3. Stage tracked changes only — don't blindly include untracked files (they may include secrets the gitignore hasn't caught yet):
+   ```bash
+   git add -u                # tracked modifications and deletions
+   ```
+   For new files, add them by name:
+   ```bash
+   git add <path>            # one or more specific paths
+   ```
+   Avoid `git add -A` and `git add .` in this skill. The whole point of a checkpoint is to be quick, but quick should not mean reckless.
+
+4. Commit with a checkpoint marker:
    ```bash
    git commit -m "checkpoint: $(date +%Y-%m-%d\ %H:%M) — $ARGUMENTS"
    ```

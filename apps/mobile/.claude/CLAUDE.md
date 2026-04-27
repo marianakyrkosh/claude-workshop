@@ -69,7 +69,7 @@ test/
 9. **Reuse `core/widgets/`** — `AppCard`, `AppTextField` exist for any feature, not just Items. Add new shared widgets there.
 10. **Import order**: `dart:` → `package:` → relative.
 11. **Mounted checks** — after any `await` followed by `BuildContext` use, check `context.mounted` before touching it.
-12. **Error mapping** — Dio errors are wrapped to `AppException` by the interceptor. Catch `DioException` and unwrap `error.error` to get the typed exception.
+12. **Error mapping** — the interceptor sets the typed `AppException` on `DioException.error`. Catch `DioException` and read `e.error` (a single field, e.g. `if (e.error is NotFoundException)`) to access the typed exception.
 
 ## API integration
 
