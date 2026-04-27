@@ -35,6 +35,7 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
                   toast.success('Item deleted')
                   router.push('/items')
                 },
+                onError: (err) => toast.error(err.message),
               })
             }
           >
