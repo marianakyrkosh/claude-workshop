@@ -180,4 +180,4 @@ Before writing the report file:
 4. Confirm all 5 domain sections are present (even if some are empty with "No issues found")
 5. Confirm the Next Steps section contains only priorities, not implementation details
 
-Save the audit report to `docs/audit/mobile/` in the project root. Before saving, check how many files already exist in that directory and use the next sequential number as the filename prefix (e.g. if `1-*.md` and `2-*.md` already exist, name the file `3-flutter-audit-YYYY-MM-DD.md`). Use `ls docs/audit/mobile/` or a Glob to count existing files before writing.
+Save the audit report to `docs/audit/mobile/` in the project root. Run `mkdir -p docs/audit/mobile` first if the directory doesn't exist. Before saving, count how many files are already there and use the next sequential number as the filename prefix (e.g. if `1-*.md` and `2-*.md` exist, name the file `3-flutter-audit-YYYY-MM-DD.md`). Use `ls docs/audit/mobile/ 2>/dev/null | wc -l` or a Glob to count.

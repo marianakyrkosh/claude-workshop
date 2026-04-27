@@ -9,7 +9,13 @@ Take one finding from an audit report through the full feature workflow — bran
 
 ## Inputs
 
-- Audit file argument. If not provided, find the most recent file under `.claude/skills/fullstack-audit/outputs/` or `docs/audit/mobile/` (use `ls -t` and pick the newest matching `audit-*.md`).
+- Audit file argument. If not provided, search both possible locations (some may not exist yet — that's fine):
+
+  ```bash
+  ls -t .claude/skills/fullstack-audit/outputs/audit-*.md docs/audit/mobile/*-flutter-audit-*.md 2>/dev/null | head -1
+  ```
+
+  If both directories are empty or missing, stop and tell the user to run `/fullstack-audit` or `/flutter-audit` first.
 - Optional `#N` to target a specific item; otherwise auto-pick the next open one.
 
 ## Phase 1: SELECT

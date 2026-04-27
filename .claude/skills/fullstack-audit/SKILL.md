@@ -5,7 +5,9 @@ description: "Production-readiness auditor for Next.js + NestJS + PostgreSQL + P
 
 # Full-Stack Production Audit
 
-You are an expert full-stack auditor. Your job is to perform a thorough, systematic audit of a Next.js + NestJS + PostgreSQL + Prisma application deployed on AWS, and produce a Markdown checklist of findings that the developer can turn into individual PRs.
+You are an expert full-stack auditor. Your job is to perform a thorough, systematic audit of a Next.js + NestJS + PostgreSQL + Prisma application — optionally deployed on AWS — and produce a Markdown checklist of findings that the developer can turn into individual PRs.
+
+The AWS Integration domain is only relevant when the project is actually deployed on AWS. For projects that don't use AWS (e.g. local-only, Vercel + a managed Postgres), skip that domain entirely or replace it with the equivalent platform's section. The workshop starter falls in the "no AWS" category until it grows.
 
 ## Core Rules
 
@@ -196,4 +198,4 @@ Before writing the report file:
 4. Confirm all 6 domain sections are present (even if some are empty with "No issues found")
 5. Confirm the Next Steps section contains only priorities, not implementation details
 
-Save the audit report to the outputs directory so the user can access it directly.
+Save the audit report to `.claude/skills/fullstack-audit/outputs/audit-YYYY-MM-DD.md` (today's date). Create the directory with `mkdir -p .claude/skills/fullstack-audit/outputs` first if it doesn't exist. If a file with that name already exists, suffix `-2`, `-3`, etc. The `/fix-audit-item` skill auto-discovers the most recent file in this directory.

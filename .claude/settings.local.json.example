@@ -23,6 +23,7 @@
       "Bash(npx nest:*)",
       "Bash(npx prisma:*)",
       "Bash(npx shadcn:*)",
+      "Bash(npx shadcn@latest:*)",
       "Bash(npx turbo:*)",
       "Bash(flutter pub get:*)",
       "Bash(flutter pub upgrade:*)",
