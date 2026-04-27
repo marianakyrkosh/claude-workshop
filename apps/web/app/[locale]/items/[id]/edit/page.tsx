@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useState, useEffect, type FormEvent } from 'react'
+import { use, useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useItem, useUpdateItem } from '@/hooks/use-items'
@@ -10,23 +10,18 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 
-export default function EditItemPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params)
-  const { data: item, isLoading } = useItem(id)
+interface ItemFormProps {
+  id: string
+  initialTitle: string
+  initialDescription: string
+}
+
+function EditItemForm({ id, initialTitle, initialDescription }: ItemFormProps) {
   const updateItem = useUpdateItem(id)
   const router = useRouter()
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+  const [title, setTitle] = useState(initialTitle)
+  const [description, setDescription] = useState(initialDescription)
   const t = useTranslations('items')
-
-  useEffect(() => {
-    if (item) {
-      setTitle(item.title)
-      setDescription(item.description || '')
-    }
-  }, [item])
-
-  if (isLoading) return <p>{t('loading')}</p>
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -72,4 +67,16 @@ export default function EditItemPage({ params }: { params: Promise<{ id: string 
       </form>
     </div>
   )
+}
+
+export default function EditItemPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  const { data: item, isLoading, error } = useItem(id)
+  const t = useTranslations('items')
+
+  if (isLoading) return <p>{t('loading')}</p>
+  if (error) return <p className="text-destructive">{t('error', { message: error.message })}</p>
+  if (!item) return <p>{t('notFound')}</p>
+
+  return <EditItemForm id={id} initialTitle={item.title} initialDescription={item.description || ''} />
 }
