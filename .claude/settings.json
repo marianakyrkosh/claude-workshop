@@ -1,0 +1,25 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "INPUT=$(cat); CMD=$(echo \"$INPUT\" | jq -r '.tool_input.command // \"\"'); OUTPUT=$(echo \"$INPUT\" | jq -r '(.tool_response.stdout // .tool_response | tostring)'); if echo \"$CMD\" | grep -q 'gh pr create'; then PR_NUM=$(echo \"$OUTPUT\" | sed -n 's#.*/pull/\\([0-9][0-9]*\\).*#\\1#p' | head -1); if [ -n \"$PR_NUM\" ]; then jq -n --arg msg \"PR #${PR_NUM} was just created. Please run: /loop 5m /address-pr-comments ${PR_NUM}\" '{\"hookSpecificOutput\": {\"hookEventName\": \"PostToolUse\", \"additionalContext\": $msg}}'; fi; fi"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "figma@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true
+  }
+}
