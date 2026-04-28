@@ -88,7 +88,7 @@ The cleanest plug-in pattern when you need auth:
 
 1. **Identity provider** — pick one (Cognito, Auth0, Clerk, Firebase Auth, NextAuth, custom). They all expose a JWT in the end.
 2. **API** — add `apps/api/src/auth/` with a `JwtAuthGuard` that validates the token. Apply at the controller class level; opt out of guards on public routes via a `@Public()` decorator.
-3. **Web** — wrap `app/[locale]/layout.tsx` with an auth context provider. Read the JWT from a cookie or local storage. Pass it as `Authorization: Bearer <token>` in `fetchJson`.
+3. **Web** — wrap `app/[locale]/layout.tsx` with an auth context provider. Store the JWT in an `HttpOnly`, `Secure`, `SameSite=Lax` cookie set by the API on sign-in (avoid `localStorage` — it's readable by any XSS). Use a short-lived access token plus a refresh token if the API supports it. Pass the token as `Authorization: Bearer <token>` in `fetchJson` only on routes that need it; for cookie-based auth, send `credentials: 'include'` instead.
 4. **Mobile** — add `lib/core/auth/` with `flutter_secure_storage` for the token, an `AuthInterceptor` that injects the bearer header, and an `AuthNotifier` for sign-in/out state.
 
 The starter's existing pattern (controller → service → DTO; React Query hooks; Riverpod providers) doesn't change — you're just gating access.

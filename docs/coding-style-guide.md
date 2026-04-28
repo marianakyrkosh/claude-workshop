@@ -81,7 +81,7 @@ Shared widgets used by more than one feature go in `lib/core/widgets/`, not in a
 - Server component until proven otherwise. Adding `'use client'` is a deliberate choice, not a default.
 - Always handle the four states: `loading`, `error`, `empty`, `populated`. Even if "empty" is a one-line message.
 - Use accessible queries in tests (`getByRole`, `getByLabelText`) — selectors should mirror what users perceive.
-- Forms use controlled inputs for simple cases. For anything with cross-field validation, use `react-hook-form` + `zod` (already in package.json).
+- Forms use controlled inputs for simple cases. For anything with cross-field validation, install `react-hook-form` + `@hookform/resolvers` + `zod` (`npm install --workspace=apps/web ...`) and layer them on top of the shadcn primitives.
 - Keep `onError` handlers explicit — silent failures are a code smell.
 
 ## Flutter widget patterns
