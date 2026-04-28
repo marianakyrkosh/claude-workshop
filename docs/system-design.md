@@ -44,7 +44,7 @@ The current canonical Flutter stack for non-trivial apps. Riverpod plain provide
 
 ### next-intl + Flutter `flutter_localizations`
 
-Both apps ship with English only but the i18n plumbing is in place. Adding a second locale is a rename + a JSON file. Participants who never need it pay zero runtime cost.
+Both apps ship with English only but the i18n plumbing is in place. Adding a second locale (say `uk`) is a small fixed list of additions: register the code in `apps/web/i18n/config.ts`, drop the `apps/web/locales/uk/*.json` files, drop `apps/mobile/lib/core/l10n/app_uk.arb`, run `flutter gen-l10n`. Participants who never need it pay zero runtime cost.
 
 ### Testing: Vitest + Playwright + Jest + Flutter test
 

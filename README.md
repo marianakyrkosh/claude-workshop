@@ -15,7 +15,7 @@ A full-stack monorepo template for building apps with Claude Code. Web (Next.js 
 
 ## Prerequisites
 
-- **Node.js 22+** — `nvm use` picks up `.nvmrc`
+- **Node.js 22.12.0+** (pinned via `.nvmrc` and `engines`) — `nvm use` picks up the exact version
 - **Docker** — for local PostgreSQL
 - **Flutter SDK** (latest stable) — only needed if you're working on `apps/mobile`
 - **Claude Code** — install from https://claude.com/claude-code

@@ -11,7 +11,7 @@ Conventions that span all three apps. Local guides (`apps/<app>/.claude/CLAUDE.m
 
 | What | Convention |
 |------|-----------|
-| TypeScript files | `kebab-case.ts` for utilities, `PascalCase.tsx` for React components, `<feature>.<role>.ts` for NestJS files (e.g. `items.service.ts`) |
+| TypeScript files | `kebab-case.ts` / `kebab-case.tsx` (matches the rest of the repo — including React components like `button.tsx`, `item-card.tsx`); NestJS files use `<feature>.<role>.ts` (e.g. `items.service.ts`); Next.js special files keep their conventional names (`page.tsx`, `layout.tsx`, `route.ts`) |
 | Dart files | `snake_case.dart` |
 | Classes / types | `PascalCase` |
 | Variables / functions | `camelCase` |
