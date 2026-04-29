@@ -33,6 +33,9 @@ export default function ItemsPage() {
               <CardContent className="flex items-center justify-between p-4">
                 <Link href={`/items/${item.id}`} className="flex-1">
                   <h2 className="font-semibold">{item.title}</h2>
+                  {item.subtitle && (
+                    <p className="text-sm font-medium text-muted-foreground">{item.subtitle}</p>
+                  )}
                   {item.description && <p className="text-sm text-muted-foreground">{item.description}</p>}
                 </Link>
                 <div className="ml-4 flex gap-2">

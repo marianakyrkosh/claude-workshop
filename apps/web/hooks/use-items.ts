@@ -5,6 +5,7 @@ import type { PaginatedResponse } from '@repo/types'
 interface Item {
   id: string
   title: string
+  subtitle: string | null
   description: string | null
   createdAt: string
   updatedAt: string
@@ -43,7 +44,7 @@ export function useItem(id: string) {
 export function useCreateItem() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (data: { title: string; description?: string }) =>
+    mutationFn: (data: { title: string; subtitle?: string; description?: string }) =>
       fetchJson<Item>(`${API}/items`, { method: 'POST', body: JSON.stringify(data) }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['items'] }),
   })
@@ -52,7 +53,7 @@ export function useCreateItem() {
 export function useUpdateItem(id: string) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (data: { title?: string; description?: string }) =>
+    mutationFn: (data: { title?: string; subtitle?: string; description?: string }) =>
       fetchJson<Item>(`${API}/items/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['items'] })

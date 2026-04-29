@@ -14,13 +14,14 @@ export default function NewItemPage() {
   const router = useRouter()
   const createItem = useCreateItem()
   const [title, setTitle] = useState('')
+  const [subtitle, setSubtitle] = useState('')
   const [description, setDescription] = useState('')
   const t = useTranslations('items')
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     createItem.mutate(
-      { title, description: description || undefined },
+      { title, subtitle: subtitle || undefined, description: description || undefined },
       {
         onSuccess: () => {
           toast.success(t('toast.created'))
@@ -44,6 +45,16 @@ export default function NewItemPage() {
             required
             maxLength={200}
             placeholder={t('form.titlePlaceholder')}
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="subtitle">{t('form.subtitleLabel')}</Label>
+          <Input
+            id="subtitle"
+            value={subtitle}
+            onChange={(e) => setSubtitle(e.target.value)}
+            maxLength={200}
+            placeholder={t('form.subtitlePlaceholder')}
           />
         </div>
         <div className="space-y-2">
