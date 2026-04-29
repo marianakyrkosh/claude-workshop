@@ -27,7 +27,26 @@ This directory holds the workshop's Claude Code setup: shared settings, custom s
    ```bash
    cp .claude/settings.local.json.example .claude/settings.local.json
    ```
-2. Restart Claude Code so the plugins, hooks, and MCP servers from `settings.json` load.
+2. Install MCP-server prerequisites (see [`MCP servers`](#mcp-servers) below).
+3. Restart Claude Code so the plugins, hooks, and MCP servers from `settings.json` and `.mcp.json` load.
+
+## MCP servers
+
+The repo ships a project-scoped `/.mcp.json` so every participant gets the same toolset. Prerequisites per server:
+
+| Server | What it does | Prerequisites |
+|---|---|---|
+| `context7` | Pull up-to-date docs/snippets for libraries, frameworks, SDKs, and CLIs (`@upstash/context7-mcp`) | Node.js (already required) |
+| `shadcn` | Browse/add shadcn UI primitives via the official `shadcn` CLI | Node.js (already required for the monorepo) |
+| `aws-documentation` | Look up AWS service docs without leaving Claude | [`uv`](https://docs.astral.sh/uv/) (`brew install uv` or `curl -LsSf https://astral.sh/uv/install.sh` &#124; `sh`); `uvx` runs `awslabs.aws-documentation-mcp-server` on demand |
+| `playwright` | Drive Playwright for end-to-end browser automation | Run `npx playwright install` once so the bundled browsers are available |
+| `figma` | Talk to the Figma Dev Mode MCP server | Figma desktop app installed and **running** with the file open; the server listens on `http://127.0.0.1:3845/sse` |
+
+If a participant doesn't run Figma, the Figma server simply fails to connect — the rest keep working. If `uv`/`uvx` is missing, the AWS docs server is the only one that won't start.
+
+The trust list in `settings.json` (`enabledMcpjsonServers`) already covers all five, so they auto-start without per-server prompts.
+
+> **Versions float on `@latest` today.** That keeps the workshop pulling fresh server releases, at the cost of strict reproducibility. Once the workshop has been run end-to-end against a known-good combination, the plan is to pin each server to a specific version in `.mcp.json` so every cohort gets identical output and performance.
 
 ## Slash commands at a glance
 
