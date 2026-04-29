@@ -1,11 +1,26 @@
 ---
 description: Parse a feature description into a structured change request
-argument-hint: [feature description or ticket text]
+argument-hint: [feature description | ticket text | path/to/sprint.md[#N]]
 ---
 
 # Parse Ticket
 
 Turn raw requirements into a normalized change request that the rest of the feature workflow can build on.
+
+## Input
+
+The argument can be any of:
+
+- **Free-text feature description or ticket body** — used as-is.
+- **A path to a Markdown file** (typically a sprint backlog like `docs/sprints/sprint1.md`) — read the file and treat its contents as the ticket source. If the file lists more than one feature (multiple `## N. Title` headings), ask the user which one to parse before continuing.
+- **A path with an item selector** — e.g. `docs/sprints/sprint1.md#1` or `docs/sprints/sprint1.md#item-subtitle`. Pick that specific item:
+  - `#N` (numeric) selects the Nth top-level item heading (`## N. Title` or `## N) Title`).
+  - `#slug` (text) matches the item's heading slug case-insensitively (e.g. `item-subtitle` matches `## 1. Item subtitle`).
+- **A path to a non-Markdown file or a missing path** — fall back to treating the argument as free-text and warn the user.
+
+The sprint/source file is **read-only input** — never modify it during parsing. If the source already contains structured sections (Scope, Acceptance criteria, Out of scope, etc.), reuse and refine them in the output rather than discarding them.
+
+Before writing the change request, derive the kebab-case slug from the resolved item's title and echo back the resolved title in 1–2 lines so the user can confirm the right item was picked.
 
 ## Stack context
 
@@ -41,3 +56,12 @@ If there's no Figma URL or the MCP isn't configured, skip this step entirely. Th
 ## Style
 
 Concrete and concise. Prefer bullet points over prose. Reference specific files when known.
+
+## Examples
+
+```bash
+/parse-ticket Add bulk delete for items
+/parse-ticket docs/sprints/sprint1.md           # prompt to pick an item if multiple
+/parse-ticket docs/sprints/sprint1.md#1         # the first item in the sprint file
+/parse-ticket docs/sprints/sprint1.md#item-subtitle
+```
