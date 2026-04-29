@@ -56,7 +56,7 @@ class ItemsScreen extends ConsumerWidget {
                 final item = result.data[index];
                 return AppCard(
                   title: item.title,
-                  subtitle: item.description,
+                  subtitle: item.subtitle ?? item.description,
                   onTap: () =>
                       context.push(AppRoutes.itemDetailPath(item.id)),
                 );

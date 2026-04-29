@@ -8,6 +8,7 @@ abstract class Item with _$Item {
   const factory Item({
     required String id,
     required String title,
+    String? subtitle,
     String? description,
     required DateTime createdAt,
     required DateTime updatedAt,
