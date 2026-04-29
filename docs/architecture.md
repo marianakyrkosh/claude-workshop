@@ -54,7 +54,7 @@ graph TB
     direction TB
     gorouter["GoRouter<br/>app_router.dart"]
     riverpod[("Riverpod providers<br/>(items, etc.)")]
-    repo["Repositories<br/>features/<feature>/data"]
+    repo["Repositories<br/>features/&lt;feature&gt;/data"]
     dio["Dio + error<br/>interceptor"]
     gorouter --> riverpod
     riverpod --> repo
@@ -83,9 +83,9 @@ graph TB
     tsconfig["@repo/typescript-config"]
   end
 
-  browser ==>|"HTTPS / fetch JSON<br/>NEXT_PUBLIC_API_URL=/v1"| edge
-  ios ==>|"HTTPS / Dio JSON<br/>API_BASE_URL=/v1"| edge
-  android ==>|"HTTPS / Dio JSON<br/>10.0.2.2:3001/v1"| edge
+  browser ==>|"HTTP(S) / fetch JSON<br/>NEXT_PUBLIC_API_URL=http://localhost:3001/v1"| edge
+  ios ==>|"HTTP(S) / Dio JSON<br/>API_BASE_URL=http://localhost:3001/v1"| edge
+  android ==>|"HTTP(S) / Dio JSON<br/>API_BASE_URL=http://10.0.2.2:3001/v1"| edge
 
   prismaSvc -->|"SQL via Prisma Client"| pg
 
