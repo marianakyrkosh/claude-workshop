@@ -44,7 +44,9 @@ The repo ships a project-scoped `/.mcp.json` so every participant gets the same 
 
 If a participant doesn't run Figma, the Figma server simply fails to connect — the rest keep working. If `uv`/`uvx` is missing, the AWS docs server is the only one that won't start.
 
-The trust list in `settings.json` (`enabledMcpjsonServers`) already covers all four, so they auto-start without per-server prompts.
+The trust list in `settings.json` (`enabledMcpjsonServers`) already covers all five, so they auto-start without per-server prompts.
+
+> **Versions float on `@latest` today.** That keeps the workshop pulling fresh server releases, at the cost of strict reproducibility. Once the workshop has been run end-to-end against a known-good combination, the plan is to pin each server to a specific version in `.mcp.json` so every cohort gets identical output and performance.
 
 ## Slash commands at a glance
 
