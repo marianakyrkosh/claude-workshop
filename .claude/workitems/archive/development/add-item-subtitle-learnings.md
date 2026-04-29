@@ -56,12 +56,14 @@ related:
 ## Delivery summary
 
 - Branch: `feature/add-item-subtitle`
-- Commits (4):
+- Commits (6):
   - `e42364b feat(api): add optional subtitle field to Item`
   - `4c452a3 feat(web): surface optional subtitle field on Item`
   - `b627e96 feat(mobile): surface optional subtitle field on Item`
   - `1681549 test(web): tighten items-list subtitle assertions`
-- PR: pending — to be opened by `/open-pr`.
+  - `3c12726 chore(workitems): archive add-item-subtitle artifacts`
+  - `ca86e16 chore(workitems): finalize add-item-subtitle learnings`
+- PR: https://github.com/marianakyrkosh/claude-workshop/pull/11
 - Files touched: 28 (+623 / −32). Migration file `prisma/migrations/20260429190105_add_item_subtitle/migration.sql`.
 - Source: `docs/sprints/sprint1.md#1`.
 
