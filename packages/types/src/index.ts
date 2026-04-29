@@ -14,3 +14,13 @@ export interface PaginatedResponse<T> {
   data: T[]
   meta: PaginationMeta
 }
+
+// Items — domain entity. Dates are serialized as ISO 8601 strings on the wire.
+
+export interface Item {
+  id: string
+  title: string
+  description: string | null
+  createdAt: string
+  updatedAt: string
+}
