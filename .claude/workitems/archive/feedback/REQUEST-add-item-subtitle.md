@@ -56,7 +56,7 @@ Add an optional `subtitle` field to the `Item` model so users can give an item a
 - `apps/api` (DTOs, Swagger, specs)
 - `apps/web` (hook types, list/detail/forms, i18n)
 - `apps/mobile` (Freezed model, repository, presentation screens, i18n)
-- `packages/types` — see Open question below; default is **no change** (current `Item` shape is duplicated in web hook + mobile Freezed model and not exported from `@repo/types`).
+- `packages/types` — **changed (post-merge)**: PR #12 hoisted `Item` into `@repo/types`. This PR adds `subtitle: string | null` to that shared interface. The web hook now imports `Item` from `@repo/types`. (Original plan kept it duplicated — see the design doc's `packages/types` section for the post-merge note.)
 
 ## API contract impact
 

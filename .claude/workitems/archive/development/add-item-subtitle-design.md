@@ -79,7 +79,7 @@ Prisma (Item.subtitle String?)  ──►  CreateItemDto / UpdateItemDto (@MaxLe
 
 ### `packages/types`
 
-No change. Per planning decision, `Item` shape stays duplicated between `apps/web/hooks/use-items.ts` and `apps/mobile/lib/models/item.dart`; `@repo/types` continues to expose only pagination contracts.
+> **Update (post-merge):** The original plan kept `Item` duplicated. After PR #12 (`refactor(types): export Item from @repo/types`) merged into `main`, this branch was rebased and the `Item` shape now lives in `packages/types/src/index.ts`. As a result, this PR also adds `subtitle: string | null` to that shared interface, and `apps/web/hooks/use-items.ts` imports `Item` from `@repo/types` instead of redeclaring it locally. Mobile (Dart) is unaffected — it has its own Freezed `Item` model.
 
 ## Implementation order
 
