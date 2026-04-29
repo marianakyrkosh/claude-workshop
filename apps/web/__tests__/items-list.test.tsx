@@ -6,9 +6,22 @@ import { NextIntlClientProvider } from 'next-intl'
 import ItemsPage from '@/app/[locale]/items/page'
 import messages from '@/locales/en/items.json'
 
+function makeTestQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        staleTime: Infinity,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+      },
+    },
+  })
+}
+
 function renderWithProviders(ui: ReactElement, queryClient?: QueryClient) {
-  const client =
-    queryClient ?? new QueryClient({ defaultOptions: { queries: { retry: false } } })
+  const client = queryClient ?? makeTestQueryClient()
   return render(
     <NextIntlClientProvider locale="en" messages={{ items: messages }}>
       <QueryClientProvider client={client}>{ui}</QueryClientProvider>
@@ -23,9 +36,7 @@ describe('ItemsPage', () => {
   })
 
   it('renders subtitle when present and omits it otherwise', () => {
-    const queryClient = new QueryClient({
-      defaultOptions: { queries: { retry: false } },
-    })
+    const queryClient = makeTestQueryClient()
     queryClient.setQueryData(['items', 1, 20], {
       data: [
         {

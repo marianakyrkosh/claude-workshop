@@ -96,6 +96,7 @@ class _EditItemScreenState extends ConsumerState<EditItemScreen> {
                 AppTextField(
                   controller: _subtitleController,
                   label: l10n.itemSubtitleLabel,
+                  hint: l10n.itemSubtitleHint,
                   maxLength: ItemConstraints.subtitleMaxLength,
                 ),
                 const SizedBox(height: AppSpacing.lg),
