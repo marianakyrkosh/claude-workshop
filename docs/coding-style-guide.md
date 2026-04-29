@@ -5,7 +5,7 @@ Conventions that span all three apps. Local guides (`apps/<app>/.claude/CLAUDE.m
 ## Languages
 
 - **TypeScript strict mode** in `apps/api`, `apps/web`, and `packages/*`. No `any` unless explicitly justified with a comment.
-- **Dart strict mode** in `apps/mobile`. No `dynamic` unless you're at the JSON parsing boundary.
+- **Dart sound null safety** in `apps/mobile`, with `flutter_lints` plus the custom rules in `analysis_options.yaml`. No `dynamic` unless you're at the JSON parsing boundary.
 
 ## Naming
 

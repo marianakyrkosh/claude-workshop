@@ -159,11 +159,13 @@ From repo root:
 
 ```bash
 npm run dev            # web + API together (Turborepo)
-npm run lint           # lint all workspaces
-npm run build          # build all apps
-npm run test           # unit tests for all apps
+npm run lint           # lint web + api + packages (Node workspaces)
+npm run build          # build web + api + packages
+npm run test           # unit tests for web + api + packages
 npm run format         # Prettier across the repo
 ```
+
+> Mobile isn't an npm workspace — run `flutter analyze` and `flutter test` from `apps/mobile` separately.
 
 API-specific (from `apps/api`):
 
