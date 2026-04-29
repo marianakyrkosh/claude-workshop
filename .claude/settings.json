@@ -22,6 +22,11 @@
     "figma@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true
   },
-  "enabledMcpjsonServers": ["context7"],
+  "enabledMcpjsonServers": [
+    "shadcn",
+    "aws-documentation",
+    "playwright",
+    "figma"
+  ],
   "enableAllProjectMcpServers": true
 }
