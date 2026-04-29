@@ -1,6 +1,6 @@
 # Sprint 1
 
-Workshop sprint backlog. Each item is a self-contained feature description suitable for `/feature-flow #<n>`.
+Workshop sprint backlog. Each item is a self-contained feature description suitable for `/feature-flow docs/sprints/sprint1.md#<n>`.
 
 ## 1. Item subtitle
 
