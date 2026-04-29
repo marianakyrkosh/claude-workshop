@@ -66,7 +66,7 @@ The `extension points` table in `architecture.md` shows where each one lands whe
 
 ## Local-first development
 
-PostgreSQL runs in Docker. The API binds to `localhost:3001`. The web app binds to `localhost:3000` and proxies to the API via `NEXT_PUBLIC_API_URL`. Mobile uses `--dart-define-from-file=.env` to set `API_BASE_URL` — `localhost:3001` works for the iOS simulator, Android emulators need `10.0.2.2:3001` (documented in the README).
+PostgreSQL runs in Docker. The API binds to `localhost:3001`. The web app binds to `localhost:3000` and calls the API directly at `NEXT_PUBLIC_API_URL` (no Next.js rewrites — straight `fetch` from the client). Mobile uses `--dart-define-from-file=.env` to set `API_BASE_URL` — `localhost:3001` works for the iOS simulator, Android emulators need `10.0.2.2:3001` (documented in the README).
 
 No part of the starter assumes a specific cloud provider. When you deploy, the `/devops-cicd` skill walks through a low-cost AWS setup (Fargate Spot, ephemeral staging, no NAT Gateway).
 

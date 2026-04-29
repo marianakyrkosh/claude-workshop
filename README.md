@@ -9,7 +9,7 @@ A full-stack monorepo template for building apps with Claude Code. Web (Next.js 
 - **shadcn/ui + Tailwind 4** with a custom theme on web
 - **Riverpod + GoRouter + Dio + Freezed** with theme tokens on mobile
 - **i18n on day one** — next-intl for web, ARB files for mobile (English shipped; adding a locale is a copy-paste)
-- **Claude Code config** — 20 custom skills, 5 personas, plugin-enabled, per-app guides
+- **Claude Code config** — 19 custom skills, 5 personas, plugin-enabled, per-app guides
 - **Local-first** — `docker compose up`, no cloud accounts required
 - **CI** — GitHub Actions runs lint, typecheck, and unit tests on every PR
 
@@ -83,7 +83,7 @@ claude-workshop/
 │   ├── settings.json          Plugins + hooks + MCP servers
 │   ├── settings.local.json.example   Personal permission template
 │   ├── personas/              tech-lead, backend-engineer, etc.
-│   ├── skills/                20 custom slash commands
+│   ├── skills/                19 custom slash commands
 │   └── workitems/             Active feature artifacts (filled during /feature-flow)
 ├── docs/
 │   ├── architecture.md        How the apps fit together
