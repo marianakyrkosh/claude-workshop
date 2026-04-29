@@ -1,15 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { env } from '@/config/env'
-import type { PaginatedResponse } from '@repo/types'
-
-interface Item {
-  id: string
-  title: string
-  subtitle: string | null
-  description: string | null
-  createdAt: string
-  updatedAt: string
-}
+import type { Item, PaginatedResponse } from '@repo/types'
 
 const API = env.API_URL
 
