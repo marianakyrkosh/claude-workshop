@@ -36,6 +36,7 @@ The repo ships a project-scoped `/.mcp.json` so every participant gets the same 
 
 | Server | What it does | Prerequisites |
 |---|---|---|
+| `context7` | Pull up-to-date docs/snippets for libraries, frameworks, SDKs, and CLIs (`@upstash/context7-mcp`) | Node.js (already required) |
 | `shadcn` | Browse/add shadcn UI primitives via the official `shadcn` CLI | Node.js (already required for the monorepo) |
 | `aws-documentation` | Look up AWS service docs without leaving Claude | [`uv`](https://docs.astral.sh/uv/) (`brew install uv` or `curl -LsSf https://astral.sh/uv/install.sh \| sh`); `uvx` runs `awslabs.aws-documentation-mcp-server` on demand |
 | `playwright` | Drive Playwright for end-to-end browser automation | Run `npx playwright install` once so the bundled browsers are available |

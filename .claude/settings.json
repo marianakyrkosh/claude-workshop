@@ -23,6 +23,7 @@
     "superpowers@claude-plugins-official": true
   },
   "enabledMcpjsonServers": [
+    "context7",
     "shadcn",
     "aws-documentation",
     "playwright",
