@@ -10,7 +10,7 @@ End-to-end handling of PR review feedback. Each comment is evaluated, optionally
 ## Phase 1: Fetch
 
 ```bash
-gh pr view <number> --json number,title,headRefName,baseRefName,url
+gh pr view <number> --json number,title,headRefName,baseRefName,url,state
 gh pr diff <number>
 gh api graphql -f query='
 {
@@ -22,12 +22,27 @@ gh api graphql -f query='
           comments(first: 1) { nodes { body databaseId path line } }
         }
       }
+      reviewRequests(first: 20) {
+        nodes { requestedReviewer { ... on Bot { login } ... on User { login } } }
+      }
     }
   }
 }'
 ```
 
-Filter to threads where `isResolved == false`. Skip pure acknowledgments ("LGTM", "thanks").
+Filter to threads where `isResolved == false`. Skip pure acknowledgments ("LGTM", "thanks"). Note whether Copilot appears in `reviewRequests` (a pending review = Copilot is "in the process of reviewing"); you'll need this for the early-stop check below.
+
+### Early stop: nothing to address
+
+If `unresolved threads == 0` AND Copilot is **not** in the pending `reviewRequests`, this skill has nothing to do — and if it's running on a `/loop`, the loop should be cancelled rather than burn cycles. Run:
+
+```bash
+# List session crons; find the job whose prompt is /address-pr-comments <PR#> for this PR.
+```
+
+Use `CronList` to find any session cron whose `prompt` matches `/address-pr-comments <number>` (where `<number>` is the current PR), then call `CronDelete` with that job's id. Tell the user one line: which job was cancelled and why (no unresolved threads, no pending Copilot review). Then stop — don't continue to Phase 2+.
+
+If `unresolved threads == 0` but Copilot **is** still pending, just stop this invocation without cancelling the loop — the next tick may catch Copilot's incoming review.
 
 ## Phase 2: Evaluate
 
@@ -99,4 +114,4 @@ gh api repos/<owner>/<repo>/pulls/<number>/requested_reviewers \
 - Reply messages: concise, professional, no emojis, no filler.
 - If a comment references code outside the PR diff, flag it to the user instead of expanding scope.
 - If you reject, explain why — don't just close the thread.
-- If there are no unresolved threads and Copilot isn't pending: stop. Don't create busywork.
+- If there are no unresolved threads and Copilot isn't pending: stop. Don't create busywork. If a matching `/loop` cron exists for this PR, cancel it via `CronList` + `CronDelete` so it doesn't keep firing — see Phase 1's early-stop block.
