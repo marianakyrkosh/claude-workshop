@@ -6,6 +6,7 @@ import { PrismaService } from '../prisma/prisma.service'
 const mockItem = {
   id: 'cuid123',
   title: 'Test Item',
+  subtitle: null as string | null,
   description: 'Test description',
   createdAt: new Date(),
   updatedAt: new Date(),
@@ -45,6 +46,14 @@ describe('ItemsService', () => {
       expect(result).toEqual(mockItem)
       expect(mockPrismaService.item.create).toHaveBeenCalledWith({ data: dto })
     })
+
+    it('should create an item with a subtitle', async () => {
+      const dto = { title: 'Test Item', subtitle: 'A short tagline', description: 'Test description' }
+      mockPrismaService.item.create.mockResolvedValueOnce({ ...mockItem, subtitle: dto.subtitle })
+      const result = await service.create(dto)
+      expect(result.subtitle).toBe(dto.subtitle)
+      expect(mockPrismaService.item.create).toHaveBeenCalledWith({ data: dto })
+    })
   })
 
   describe('findAll', () => {
@@ -72,6 +81,17 @@ describe('ItemsService', () => {
       const dto = { title: 'Updated' }
       const result = await service.update('cuid123', dto)
       expect(result).toEqual(mockItem)
+      expect(mockPrismaService.item.update).toHaveBeenCalledWith({
+        where: { id: 'cuid123' },
+        data: dto,
+      })
+    })
+
+    it('should update only the subtitle', async () => {
+      const dto = { subtitle: 'New tagline' }
+      mockPrismaService.item.update.mockResolvedValueOnce({ ...mockItem, subtitle: dto.subtitle })
+      const result = await service.update('cuid123', dto)
+      expect(result.subtitle).toBe(dto.subtitle)
       expect(mockPrismaService.item.update).toHaveBeenCalledWith({
         where: { id: 'cuid123' },
         data: dto,

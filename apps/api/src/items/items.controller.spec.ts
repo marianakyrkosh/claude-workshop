@@ -5,6 +5,7 @@ import { ItemsService } from './items.service'
 const mockItem = {
   id: 'cuid123',
   title: 'Test Item',
+  subtitle: null as string | null,
   description: 'Test description',
   createdAt: new Date(),
   updatedAt: new Date(),
@@ -39,6 +40,12 @@ describe('ItemsController', () => {
     expect(await controller.create(dto)).toEqual(mockItem)
   })
 
+  it('should create an item with a subtitle', async () => {
+    const dto = { title: 'Test', subtitle: 'Tagline', description: 'Desc' }
+    await controller.create(dto)
+    expect(mockItemsService.create).toHaveBeenCalledWith(dto)
+  })
+
   it('should return paginated items', async () => {
     const result = await controller.findAll({ page: 1, limit: 20 })
     expect(result.data).toEqual([mockItem])
@@ -50,6 +57,12 @@ describe('ItemsController', () => {
 
   it('should update an item', async () => {
     expect(await controller.update('cuid123', { title: 'Updated' })).toEqual(mockItem)
+  })
+
+  it('should update an item with a subtitle', async () => {
+    const dto = { subtitle: 'New tagline' }
+    await controller.update('cuid123', dto)
+    expect(mockItemsService.update).toHaveBeenCalledWith('cuid123', dto)
   })
 
   it('should delete an item', async () => {
