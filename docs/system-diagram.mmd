@@ -1,0 +1,69 @@
+graph TB
+  subgraph clients["Clients"]
+    direction LR
+    browser["Web browser<br/>(Next.js client bundle)"]
+    ios["iOS simulator / device"]
+    android["Android emulator / device"]
+  end
+
+  subgraph web["apps/web — Next.js 16 (App Router)"]
+    direction TB
+    middleware["middleware.ts<br/>next-intl locale routing"]
+    rsc["Server Components<br/>app/[locale]/..."]
+    cc["Client Components<br/>'use client'"]
+    rq[("React Query cache<br/>staleTime 60s")]
+    middleware --> rsc
+    rsc --> cc
+    cc --> rq
+  end
+
+  subgraph mobile["apps/mobile — Flutter"]
+    direction TB
+    gorouter["GoRouter<br/>app_router.dart"]
+    riverpod[("Riverpod providers<br/>(items, etc.)")]
+    repo["Repositories<br/>features/<feature>/data"]
+    dio["Dio + error<br/>interceptor"]
+    gorouter --> riverpod
+    riverpod --> repo
+    repo --> dio
+  end
+
+  subgraph api["apps/api — NestJS 11"]
+    direction TB
+    edge["Edge: Helmet<br/>CORS · ValidationPipe"]
+    controllers["Controllers<br/>/v1/* routes"]
+    services["Services<br/>business logic"]
+    prismaSvc["PrismaService<br/>(@Global module)"]
+    edge --> controllers
+    controllers --> services
+    services --> prismaSvc
+  end
+
+  subgraph data["Data layer"]
+    pg[("PostgreSQL 16<br/>docker-compose,<br/>:5432")]
+  end
+
+  subgraph shared["Shared packages"]
+    types["@repo/types<br/>PaginationMeta · PaginatedResponse"]
+    ui["@repo/ui<br/>(placeholder)"]
+    eslint["@repo/eslint-config"]
+    tsconfig["@repo/typescript-config"]
+  end
+
+  browser ==>|"HTTPS / fetch JSON<br/>NEXT_PUBLIC_API_URL=/v1"| edge
+  ios ==>|"HTTPS / Dio JSON<br/>API_BASE_URL=/v1"| edge
+  android ==>|"HTTPS / Dio JSON<br/>10.0.2.2:3001/v1"| edge
+
+  prismaSvc -->|"SQL via Prisma Client"| pg
+
+  cc -. type imports .-> types
+  rq -. type imports .-> types
+  services -. type imports .-> types
+  repo -. mirrored shape .-> types
+
+  classDef tier fill:#f6f8fa,stroke:#94a3b8,color:#0f172a;
+  classDef store fill:#fef9c3,stroke:#a16207,color:#0f172a;
+  classDef shared fill:#e0e7ff,stroke:#4338ca,color:#1e1b4b;
+  class clients,web,mobile,api tier;
+  class data,pg store;
+  class shared,types,ui,eslint,tsconfig shared;
