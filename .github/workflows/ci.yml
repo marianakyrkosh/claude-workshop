@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  api:
+    name: API (lint + typecheck + test)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install workspace deps
+        run: npm ci
+        working-directory: .
+      - name: Build shared packages
+        run: npm run build --workspace=@repo/types
+        working-directory: .
+      - name: Generate Prisma client
+        run: npx prisma generate
+      - name: Lint
+        run: npm run lint
+      - name: Type check
+        run: npx tsc --noEmit -p tsconfig.build.json
+      - name: Unit tests
+        run: npm run test
+
+  web:
+    name: Web (lint + typecheck + test)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install workspace deps
+        run: npm ci
+        working-directory: .
+      - name: Build shared packages
+        run: npm run build --workspace=@repo/types
+        working-directory: .
+      - name: Lint
+        run: npm run lint
+      - name: Type check
+        run: npx tsc --noEmit
+      - name: Unit tests (Vitest)
+        run: npx vitest run
+
+  audit:
+    name: Security audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install workspace deps
+        run: npm ci
+      - name: npm audit (critical only)
+        run: npm audit --audit-level=critical
