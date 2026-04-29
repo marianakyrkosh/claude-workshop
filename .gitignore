@@ -54,3 +54,6 @@ apps/mobile/lib/core/l10n/generated/
 
 # vercel
 .vercel
+
+# claude code session-only runtime state
+.claude/scheduled_tasks.lock
