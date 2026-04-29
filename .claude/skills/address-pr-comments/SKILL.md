@@ -30,19 +30,28 @@ gh api graphql -f query='
 }'
 ```
 
-Filter to threads where `isResolved == false`. Skip pure acknowledgments ("LGTM", "thanks"). Note whether Copilot appears in `reviewRequests` (a pending review = Copilot is "in the process of reviewing"); you'll need this for the early-stop check below.
+Filter to threads where `isResolved == false`. Skip pure acknowledgments ("LGTM", "thanks").
+
+Note whether Copilot is "in the process of reviewing" by checking the GraphQL `requestedReviewer.login` value for exactly `copilot-pull-request-reviewer` (no `[bot]` suffix). Treat that as "Copilot pending" for the early-stop check below. This is intentionally different from the REST reviewer slug `copilot-pull-request-reviewer[bot]` used later in Phase 6 — REST and GraphQL surface bot logins differently.
+
+Also note the PR `state` from `gh pr view`: it's used by the early-stop check to recognize merged or closed PRs.
 
 ### Early stop: nothing to address
 
-If `unresolved threads == 0` AND Copilot is **not** in the pending `reviewRequests`, this skill has nothing to do — and if it's running on a `/loop`, the loop should be cancelled rather than burn cycles. Run:
+Trigger this stop if **any** of the following are true:
 
-```bash
-# List session crons; find the job whose prompt is /address-pr-comments <PR#> for this PR.
-```
+- `state != "OPEN"` (the PR is `MERGED` or `CLOSED` — there's nothing left to review), or
+- `unresolved threads == 0` AND Copilot is not in the pending `reviewRequests`.
 
-Use `CronList` to find any session cron whose `prompt` matches `/address-pr-comments <number>` (where `<number>` is the current PR), then call `CronDelete` with that job's id. Tell the user one line: which job was cancelled and why (no unresolved threads, no pending Copilot review). Then stop — don't continue to Phase 2+.
+When triggered, this skill has nothing to do — and if it's running on a `/loop`, the loop should be cancelled rather than burn cycles. Do the following:
 
-If `unresolved threads == 0` but Copilot **is** still pending, just stop this invocation without cancelling the loop — the next tick may catch Copilot's incoming review.
+1. Call `CronList` to list session cron jobs.
+2. Find **every** job whose `prompt` matches `/address-pr-comments <number>` for the current PR (there should usually be at most one, but if duplicate `/loop` invocations created several, treat them all as stale).
+3. Call `CronDelete` on each matching job id — cancel them all.
+4. Tell the user, in one line, which job ids were cancelled and why (e.g. `state=MERGED`, or `no unresolved threads + no pending Copilot review`).
+5. Stop — do not continue to Phase 2+.
+
+If the PR is `OPEN`, threads are 0, but Copilot **is** still pending: stop this invocation without cancelling the loop — the next tick may catch Copilot's incoming review.
 
 ## Phase 2: Evaluate
 
