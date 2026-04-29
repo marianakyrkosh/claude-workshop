@@ -52,7 +52,7 @@ describe('ItemsPage', () => {
 
     expect(screen.getByText('With subtitle')).toBeInTheDocument()
     expect(screen.getByText('No subtitle')).toBeInTheDocument()
-    expect(screen.getByText('A neat tagline')).toBeInTheDocument()
-    expect(screen.queryByText('Subtitle for B')).not.toBeInTheDocument()
+    expect(screen.getAllByText('A neat tagline')).toHaveLength(1)
+    expect(screen.getByText('Body B')).toBeInTheDocument()
   })
 })
