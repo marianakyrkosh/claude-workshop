@@ -10,7 +10,7 @@ End-to-end handling of PR review feedback. Each comment is evaluated, optionally
 ## Phase 1: Fetch
 
 ```bash
-gh pr view <number> --json number,title,headRefName,baseRefName,url
+gh pr view <number> --json number,title,headRefName,baseRefName,url,state
 gh pr diff <number>
 gh api graphql -f query='
 {
@@ -22,12 +22,36 @@ gh api graphql -f query='
           comments(first: 1) { nodes { body databaseId path line } }
         }
       }
+      reviewRequests(first: 20) {
+        nodes { requestedReviewer { ... on Bot { login } ... on User { login } } }
+      }
     }
   }
 }'
 ```
 
 Filter to threads where `isResolved == false`. Skip pure acknowledgments ("LGTM", "thanks").
+
+Note whether Copilot is "in the process of reviewing" by checking the GraphQL `requestedReviewer.login` value for exactly `copilot-pull-request-reviewer` (no `[bot]` suffix). Treat that as "Copilot pending" for the early-stop check below. This is intentionally different from the REST reviewer slug `copilot-pull-request-reviewer[bot]` used later in Phase 6 — REST and GraphQL surface bot logins differently.
+
+Also note the PR `state` from `gh pr view`: it's used by the early-stop check to recognize merged or closed PRs.
+
+### Early stop: nothing to address
+
+Trigger this stop if **any** of the following are true:
+
+- `state != "OPEN"` (the PR is `MERGED` or `CLOSED` — there's nothing left to review), or
+- `unresolved threads == 0` AND Copilot is not in the pending `reviewRequests`.
+
+When triggered, this skill has nothing to do — and if it's running on a `/loop`, the loop should be cancelled rather than burn cycles. Do the following:
+
+1. Call `CronList` to list session cron jobs.
+2. Find **every** job whose `prompt` invokes `/address-pr-comments` for the current PR, whether the argument is the PR number itself (e.g. `/address-pr-comments 123`) or a PR URL containing that same PR number (e.g. `/address-pr-comments https://github.com/<owner>/<repo>/pull/123`). Match flexibly by requiring both `/address-pr-comments` and the current PR number to appear in the prompt. There should usually be at most one, but if duplicate `/loop` invocations created several, treat them all as stale.
+3. Call `CronDelete` on each matching job id — cancel them all.
+4. Tell the user, in one line, which job ids were cancelled and why (e.g. `state=MERGED`, or `no unresolved threads + no pending Copilot review`).
+5. Stop — do not continue to Phase 2+.
+
+If the PR is `OPEN`, threads are 0, but Copilot **is** still pending: stop this invocation without cancelling the loop — the next tick may catch Copilot's incoming review.
 
 ## Phase 2: Evaluate
 
@@ -99,4 +123,4 @@ gh api repos/<owner>/<repo>/pulls/<number>/requested_reviewers \
 - Reply messages: concise, professional, no emojis, no filler.
 - If a comment references code outside the PR diff, flag it to the user instead of expanding scope.
 - If you reject, explain why — don't just close the thread.
-- If there are no unresolved threads and Copilot isn't pending: stop. Don't create busywork.
+- If there are no unresolved threads and Copilot isn't pending: stop. Don't create busywork. If a matching `/loop` cron exists for this PR, cancel it via `CronList` + `CronDelete` so it doesn't keep firing — see Phase 1's early-stop block.
