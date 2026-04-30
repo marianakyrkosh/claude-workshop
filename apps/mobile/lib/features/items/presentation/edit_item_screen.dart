@@ -19,6 +19,7 @@ class EditItemScreen extends ConsumerStatefulWidget {
 
 class _EditItemScreenState extends ConsumerState<EditItemScreen> {
   final _titleController = TextEditingController();
+  final _subtitleController = TextEditingController();
   final _descriptionController = TextEditingController();
   bool _isLoading = false;
   bool _initialized = false;
@@ -26,6 +27,7 @@ class _EditItemScreenState extends ConsumerState<EditItemScreen> {
   @override
   void dispose() {
     _titleController.dispose();
+    _subtitleController.dispose();
     _descriptionController.dispose();
     super.dispose();
   }
@@ -39,6 +41,9 @@ class _EditItemScreenState extends ConsumerState<EditItemScreen> {
       await ref.read(itemsRepositoryProvider).updateItem(
             widget.id,
             title: title,
+            subtitle: _subtitleController.text.trim().isNotEmpty
+                ? _subtitleController.text.trim()
+                : null,
             description: _descriptionController.text.trim().isNotEmpty
                 ? _descriptionController.text.trim()
                 : null,
@@ -74,6 +79,7 @@ class _EditItemScreenState extends ConsumerState<EditItemScreen> {
         data: (item) {
           if (!_initialized) {
             _titleController.text = item.title;
+            _subtitleController.text = item.subtitle ?? '';
             _descriptionController.text = item.description ?? '';
             _initialized = true;
           }
@@ -85,6 +91,13 @@ class _EditItemScreenState extends ConsumerState<EditItemScreen> {
                   controller: _titleController,
                   label: l10n.fieldTitle,
                   maxLength: ItemConstraints.titleMaxLength,
+                ),
+                const SizedBox(height: AppSpacing.lg),
+                AppTextField(
+                  controller: _subtitleController,
+                  label: l10n.itemSubtitleLabel,
+                  hint: l10n.itemSubtitleHint,
+                  maxLength: ItemConstraints.subtitleMaxLength,
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 AppTextField(

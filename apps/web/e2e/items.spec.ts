@@ -9,11 +9,13 @@ test.describe('Items CRUD', () => {
   test('should create a new item', async ({ page }) => {
     await page.goto('/items/new')
     await page.getByLabel('Title').fill('Test Item')
+    await page.getByLabel('Subtitle').fill('A neat tagline')
     await page.getByLabel('Description').fill('A test description')
     await page.getByRole('button', { name: 'Create' }).click()
 
     await expect(page).toHaveURL('/items')
     await expect(page.getByText('Test Item')).toBeVisible()
+    await expect(page.getByText('A neat tagline')).toBeVisible()
   })
 
   test('should view item detail', async ({ page }) => {

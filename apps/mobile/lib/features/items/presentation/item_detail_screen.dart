@@ -76,6 +76,10 @@ class ItemDetailScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(item.title, style: AppTypography.h1),
+              if (item.subtitle != null) ...[
+                const SizedBox(height: AppSpacing.sm),
+                Text(item.subtitle!, style: AppTypography.body),
+              ],
               const SizedBox(height: AppSpacing.md),
               if (item.description != null)
                 Text(item.description!, style: AppTypography.body),

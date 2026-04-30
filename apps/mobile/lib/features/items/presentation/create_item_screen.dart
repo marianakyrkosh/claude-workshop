@@ -18,12 +18,14 @@ class CreateItemScreen extends ConsumerStatefulWidget {
 
 class _CreateItemScreenState extends ConsumerState<CreateItemScreen> {
   final _titleController = TextEditingController();
+  final _subtitleController = TextEditingController();
   final _descriptionController = TextEditingController();
   bool _isLoading = false;
 
   @override
   void dispose() {
     _titleController.dispose();
+    _subtitleController.dispose();
     _descriptionController.dispose();
     super.dispose();
   }
@@ -36,6 +38,9 @@ class _CreateItemScreenState extends ConsumerState<CreateItemScreen> {
     try {
       await ref.read(itemsRepositoryProvider).createItem(
             title: title,
+            subtitle: _subtitleController.text.trim().isNotEmpty
+                ? _subtitleController.text.trim()
+                : null,
             description: _descriptionController.text.trim().isNotEmpty
                 ? _descriptionController.text.trim()
                 : null,
@@ -69,6 +74,13 @@ class _CreateItemScreenState extends ConsumerState<CreateItemScreen> {
               controller: _titleController,
               label: l10n.fieldTitle,
               maxLength: ItemConstraints.titleMaxLength,
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            AppTextField(
+              controller: _subtitleController,
+              label: l10n.itemSubtitleLabel,
+              hint: l10n.itemSubtitleHint,
+              maxLength: ItemConstraints.subtitleMaxLength,
             ),
             const SizedBox(height: AppSpacing.lg),
             AppTextField(

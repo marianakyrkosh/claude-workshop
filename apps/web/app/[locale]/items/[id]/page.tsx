@@ -45,6 +45,7 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
           </Button>
         </div>
       </div>
+      {item.subtitle && <p className="text-lg text-muted-foreground">{item.subtitle}</p>}
       {item.description && <p className="text-muted-foreground">{item.description}</p>}
       <p className="text-sm text-muted-foreground">{t('created', { date: new Date(item.createdAt).toLocaleDateString() })}</p>
       <Button variant="link" className="px-0" asChild>

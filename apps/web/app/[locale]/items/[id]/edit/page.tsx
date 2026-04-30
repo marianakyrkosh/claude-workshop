@@ -13,20 +13,22 @@ import { Label } from '@/components/ui/label'
 interface ItemFormProps {
   id: string
   initialTitle: string
+  initialSubtitle: string
   initialDescription: string
 }
 
-function EditItemForm({ id, initialTitle, initialDescription }: ItemFormProps) {
+function EditItemForm({ id, initialTitle, initialSubtitle, initialDescription }: ItemFormProps) {
   const updateItem = useUpdateItem(id)
   const router = useRouter()
   const [title, setTitle] = useState(initialTitle)
+  const [subtitle, setSubtitle] = useState(initialSubtitle)
   const [description, setDescription] = useState(initialDescription)
   const t = useTranslations('items')
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     updateItem.mutate(
-      { title, description: description || undefined },
+      { title, subtitle: subtitle || undefined, description: description || undefined },
       {
         onSuccess: () => {
           toast.success(t('toast.updated'))
@@ -49,6 +51,16 @@ function EditItemForm({ id, initialTitle, initialDescription }: ItemFormProps) {
             onChange={(e) => setTitle(e.target.value)}
             required
             maxLength={200}
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="subtitle">{t('form.subtitleLabel')}</Label>
+          <Input
+            id="subtitle"
+            value={subtitle}
+            onChange={(e) => setSubtitle(e.target.value)}
+            maxLength={200}
+            placeholder={t('form.subtitlePlaceholder')}
           />
         </div>
         <div className="space-y-2">
@@ -78,5 +90,12 @@ export default function EditItemPage({ params }: { params: Promise<{ id: string 
   if (error) return <p className="text-destructive">{t('error', { message: error.message })}</p>
   if (!item) return <p>{t('notFound')}</p>
 
-  return <EditItemForm id={id} initialTitle={item.title} initialDescription={item.description || ''} />
+  return (
+    <EditItemForm
+      id={id}
+      initialTitle={item.title}
+      initialSubtitle={item.subtitle ?? ''}
+      initialDescription={item.description || ''}
+    />
+  )
 }

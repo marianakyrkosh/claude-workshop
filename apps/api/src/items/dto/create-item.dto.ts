@@ -8,6 +8,12 @@ export class CreateItemDto {
   @MaxLength(200)
   title!: string
 
+  @ApiPropertyOptional({ description: 'Item subtitle / tagline', maxLength: 200 })
+  @IsOptional()
+  @IsString()
+  @MaxLength(200)
+  subtitle?: string
+
   @ApiPropertyOptional({ description: 'Item description', maxLength: 2000 })
   @IsOptional()
   @IsString()

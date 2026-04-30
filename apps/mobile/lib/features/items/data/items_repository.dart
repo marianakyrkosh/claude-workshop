@@ -30,10 +30,12 @@ class ItemsRepository {
 
   Future<Item> createItem({
     required String title,
+    String? subtitle,
     String? description,
   }) async {
     final response = await _dio.post('/items', data: {
       'title': title,
+      if (subtitle != null) 'subtitle': subtitle,
       if (description != null) 'description': description,
     });
     return Item.fromJson(response.data as Map<String, dynamic>);
@@ -42,10 +44,12 @@ class ItemsRepository {
   Future<Item> updateItem(
     String id, {
     String? title,
+    String? subtitle,
     String? description,
   }) async {
     final response = await _dio.patch('/items/$id', data: {
       if (title != null) 'title': title,
+      if (subtitle != null) 'subtitle': subtitle,
       if (description != null) 'description': description,
     });
     return Item.fromJson(response.data as Map<String, dynamic>);

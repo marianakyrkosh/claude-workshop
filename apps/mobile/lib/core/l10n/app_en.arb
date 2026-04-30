@@ -82,6 +82,16 @@
     "description": "Label for the optional description input field"
   },
 
+  "itemSubtitleLabel": "Subtitle",
+  "@itemSubtitleLabel": {
+    "description": "Label for the subtitle input field on item create/edit screens"
+  },
+
+  "itemSubtitleHint": "Enter a short tagline (optional)",
+  "@itemSubtitleHint": {
+    "description": "Placeholder text for the subtitle input field"
+  },
+
   "createButton": "Create",
   "@createButton": {
     "description": "Create button label"

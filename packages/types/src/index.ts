@@ -20,6 +20,7 @@ export interface PaginatedResponse<T> {
 export interface Item {
   id: string
   title: string
+  subtitle: string | null
   description: string | null
   createdAt: string
   updatedAt: string

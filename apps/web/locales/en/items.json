@@ -18,6 +18,8 @@
     "editTitle": "Edit Item",
     "titleLabel": "Title",
     "titlePlaceholder": "Enter item title",
+    "subtitleLabel": "Subtitle",
+    "subtitlePlaceholder": "Enter a short tagline (optional)",
     "descriptionLabel": "Description",
     "descriptionPlaceholder": "Enter item description (optional)"
   },
